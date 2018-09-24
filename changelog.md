@@ -4,6 +4,10 @@
 Jupman Jupyter Manager  http://jupman.readthedocs.com
 
 
+## 2.0, September 24th, 2018
+
+- now using index.ipynb as home. Hurray !
+
 ## 1.0, September 19th, 2018
 
 - fixed build.py

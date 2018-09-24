@@ -1,12 +1,12 @@
 
 
+
 .. toctree::
     :maxdepth: 2
     :glob:
-    :hidden:
 
 
-    Home <home.ipynb>
+    Home <index.ipynb>
     usage.md
     jupman-tests.ipynb
 
@@ -20,5 +20,5 @@
     jm-templates/project-NAME-SURNAME-ID/requirements.txt
     changelog.md
 
-.
---------
+Index
+-----------
