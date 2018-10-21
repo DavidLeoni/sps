@@ -122,6 +122,7 @@ def make_write_solution_here_pattern():
     return re.compile("(" + removed_spaces + ")(.*)", flags=re.DOTALL )
 
 WRITE_SOLUTION_HERE_PATTERN = make_write_solution_here_pattern()
+SOLUTION_PATTERN = re.compile(SOLUTION)
 
 
 def fatal(msg, ex=None):
@@ -339,8 +340,9 @@ def validate_tags(text, fname):
             raise Exception("Missing initial tag %s in %s" % (jupman_tag_start(tag), fname) )
     
     write_solution_here_count = len(WRITE_SOLUTION_HERE_PATTERN.findall(text))
+    solution_count = len(SOLUTION_PATTERN.findall(text))
     
-    return sum(tag_starts.values()) + write_solution_here_count > 0
+    return sum(tag_starts.values()) + write_solution_here_count + solution_count > 0
 
 
 
