@@ -76,7 +76,8 @@ def init(parser,context,args):
 
     os.rename(eld_admin + "/" + "jupman-yyyy-mm-dd-grades.ods", eld_admin + "/" + conf.filename + "-" + ld + "-grades.ods")
     
-    info("You can now edit Python solutions, tests, exercisesa and exam notebook here  : " )
+    info()
+    info("You can now edit Python solutions, tests, exercises and exam notebook here  : " )
     print()
     info("   " + eld_solutions)
 
