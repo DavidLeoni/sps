@@ -237,7 +237,6 @@ def publish(parser,context,args):
     source = "private/" + ld  
     source_admin = source + '-admin'
     source_solutions = source +  '-solutions' 
-    source_ipynb = source + '-solutions/exam-' + ld + '.ipynb'
     student_html = get_target_student(ld) + '/' + get_exam_text_filename(ld, 'html')
     
     
@@ -255,7 +254,8 @@ def publish(parser,context,args):
         fatal("TARGET PUBLIC EXAM ZIP " + dest_zip + ".zip ALREADY EXISTS !")    
 
     info("Copying solutions to " + str(dest))
-    conf.copy_code(source_solutions, dest, copy_solutions=True)
+    shutil.copytree(source_solutions, dest)
+
     info("Copying exam HTML text")
     shutil.copyfile(student_html, dest + '/' + get_exam_text_filename(ld, 'html'))
     
