@@ -32,7 +32,7 @@ def expand_JM(source, target, exam_date):
     s = s.replace('_JM_{exam.date_human}', d.strftime('%A %d, %B %Y') )
     for k in conf.__dict__:
         s = s.replace('_JM_{conf.' + k + '}', str(conf.__dict__[k]))
-    p = re.compile('_JM_\{[a-zA-Z][\w\.]*\}')
+    p = re.compile(r'_JM_\{[a-zA-Z][\w\.]*\}')
     if p.search(s):
         warn("FOUND _JM_ macros which couldn't be expanded!")
         print("               file: " + source)
@@ -215,7 +215,7 @@ def zip_grades(parser,context,args):
     ld = arg_date(parser, args)
     eld_admin = "private/" + ld + '-admin'
     shipped = eld_admin + "/shipped"
-    graded =  eld_admin + "/graded"
+
     try:
         
         dir_names = next(os.walk(shipped))[1]
