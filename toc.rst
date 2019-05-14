@@ -1,7 +1,5 @@
 
 
-
-
 .. toctree::
     :caption: Index
     :maxdepth: 2
@@ -30,8 +28,7 @@ Exercise examples
     Jupyter introduction <exercises/jupyter-intro/jupyter-intro-solution.ipynb>
 
 Templates
-============
-
+==========
 
 .. toctree::
 
