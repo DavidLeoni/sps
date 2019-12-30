@@ -7,10 +7,10 @@ from recommonmark.transform import AutoStructify
 from recommonmark.parser import CommonMarkParser
 import datetime
 import glob
-import sys
 import re
 import os
-
+import sys
+sys.path.append('.') # for rtd 
 import jupman_tools as jmt
 
 on_rtd = os.environ.get('READTHEDOCS') == 'True'
