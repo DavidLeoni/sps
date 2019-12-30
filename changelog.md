@@ -1,28 +1,45 @@
 
 # Changelog
 
-Jupman Jupyter Manager  http://jupman.readthedocs.com
+Jupman Jupyter Manager 
 
+http://jupman.readthedocs.com
 
-## 2.0, September 24th, 2018
+## 3.0 - December 29th, 2019
+
+- much simplified folder structure 
+  - https://github.com/DavidLeoni/jupman/issues/33
+
+- removed solutions from header requirement 
+  - https://github.com/DavidLeoni/jupman/issues/32
+
+- introduced tests (pytest, hypothesis)
+- removed old_news in favor of changelog.md
+- Latex:
+    - much better PDF cover
+    - using xelatex
+    - set up unicode mappings
+- several fixes
+
+## 2.0 - September 24th, 2018
 
 - now using index.ipynb as home. Hurray !
 
-## 1.0, September 19th, 2018
+## 1.0 - September 19th, 2018
 
 - fixed build.py
 - added html templates examples
 - cleaned toc (was showing too much when loading)
 
 
-## 0.9, August 26th, 2018
+## 0.9 - August 26th, 2018
 
 - implemented generation of exercises from solutions
   see https://github.com/DavidLeoni/jupman/issues/14
 - reverted to old jupman.init() code
   see https://github.com/DavidLeoni/jupman/issues/12
 
-## v0.8, August 12th, 2018
+## v0.8 - August 12th, 2018
 
 - Prepended all functions in jupman.py with `jupman_`
 
@@ -52,7 +69,7 @@ Jupman Jupyter Manager  http://jupman.readthedocs.com
 - Fixes https://github.com/DavidLeoni/jupman/issues/2 : 
   now toc is present in local build for pdfs 
 
-## V0.7 , August 3rd, 2018
+## V0.7 - August 3rd, 2018
 
 - added jupman.py pytut() for displaying Python tutor in the cells
 - added  jupman.py toc=False option to jupman.py init to disable toc

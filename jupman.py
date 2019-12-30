@@ -1,16 +1,8 @@
 
-# David Leoni Aug 2018
+# Library to be included in Jupyter notebooks 
 
-
-# Library to be included in Jupyter notebooks with commands like (note the '-i')
-#
-#    %run -i ../../jupman
-#
-# followed by
-#
-#    jupman_init()
-#
-# For reasons behind, see  discussion here: https://github.com/DavidLeoni/jupman/issues/12
+__author__ = "David Leoni"
+__status__ = "Development"
 
 import sys
 import unittest
@@ -18,16 +10,16 @@ import inspect
 import os
 import argparse
 
-
         
 def init(root='', toc=False):
-    """ Injects notebooks with js and css from overlay/_static
+    """ Injects notebooks with js and css from _static
     
         To be called at the beginning of notebooks, only if you *really* need it.
         Please do read https://jupman.readthedocs.io/en/latest/usage.html#Running-Jupyter
     
         root:  string with the relative path to the root of the project
-               for exercises and exams, it would be '../../'               
+               for chapters: '../'               
+               for exams:    '../../'
     """
     from IPython.core.display import HTML
     on_rtd = os.environ.get('READTHEDOCS') == 'True'
@@ -37,10 +29,10 @@ def init(root='', toc=False):
         print("")
     else:
         # Hacky stuff, because Jupyter only allows to set a per user custom js, we want per project js
-        
-        css = open(root + "overlay/_static/css/jupman.css", "r").read()
-        tocjs = open(root + "overlay/_static/js/toc.js", "r").read()
-        js = open(root + "overlay/_static/js/jupman.js", "r").read()
+        _static = os.path.join(root, '_static')
+        css = open("%s/css/jupman.css" % _static, "r").read()
+        tocjs = open("%s/js/toc.js" % _static, "r").read()
+        js = open("%s/js/jupman.js" % _static, "r").read()
 
         ret = "<style>\n" 
         ret += css
@@ -110,11 +102,12 @@ def show_run(classOrMethod):
 
 
 def pytut():
-    """ Embeds a Python tutor in the output of the current cell, with code *current* cell stripped from the call to 
-        pytut() itself. 
+    """ Embeds a Python tutor in the output of the current cell, with code *current*    
+        cell stripped from the call to pytut() itself. 
 
         - The GUI will be shown on the built Sphinx website.
-        - Requires internet connection. Without, it will show standard browser message telling there is no connectivity        
+        - Requires internet connection. Without, it will show standard browser message 
+          telling there is no connectivity        
     """
     #Hacky way to get variables from stack, but if we use %run -i we don't need it.
     import inspect
