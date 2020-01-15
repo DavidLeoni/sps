@@ -11,50 +11,55 @@ import os
 import argparse
 
         
-def init(root='', toc=False):
+def init(toc=False):
     """ Injects notebooks with js and css from _static
     
         To be called at the beginning of notebooks, only if you *really* need it.
         Please do read https://jupman.readthedocs.io/en/latest/usage.html#Running-Jupyter
-    
-        root:  string with the relative path to the root of the project
-               for chapters: '../'               
-               for exams:    '../../'
+                   
+        NOTE: on error doesn't raise exception and just prints error message
+               
     """
-    from IPython.core.display import HTML
-    on_rtd = os.environ.get('READTHEDOCS') == 'True'
-    
-    if on_rtd:
-        # on RTD we don't inject anything, files are set in sphinx conf.py
-        print("")
-    else:
-        # Hacky stuff, because Jupyter only allows to set a per user custom js, we want per project js
-        _static = os.path.join(root, '_static')
-        css = open("%s/css/jupman.css" % _static, "r").read()
-        tocjs = open("%s/js/toc.js" % _static, "r").read()
-        js = open("%s/js/jupman.js" % _static, "r").read()
+                        
+    # Hacky stuff, because Jupyter only allows to set a per user custom js, we want per project js
+    try:
+        from IPython.core.display import HTML
+        on_rtd = os.environ.get('READTHEDOCS') == 'True'
 
-        ret = "<style>\n" 
-        ret += css
-        ret += "\n </style>\n"
+        if on_rtd:
+            # on RTD we don't inject anything, files are set in sphinx conf.py
+            print("")
+        else:
+            
+            root = os.path.dirname(os.path.abspath(__file__))                          
+            _static = os.path.join(root, '_static')                
+            
+            css = open("%s/css/jupman.css" % _static, "r").read()
+            tocjs = open("%s/js/toc.js" % _static, "r").read()
+            js = open("%s/js/jupman.js" % _static, "r").read()
 
-        ret +="\n"
+            ret = "<style>\n" 
+            ret += css
+            ret += "\n </style>\n"
 
-        ret += "<script>\n"
-        ret += "var JUPMAN_IN_JUPYTER = true;"  
-        ret += "\n"
-        if toc:
-            ret += tocjs
-            ret += "\n"    
-        ret += js
-        ret += "\n</script>\n"
+            ret +="\n"
 
-    return HTML(ret)        
-        
+            ret += "<script>\n"
+            ret += "var JUPMAN_IN_JUPYTER = true;"  
+            ret += "\n"
+            if toc:
+                ret += tocjs
+                ret += "\n"    
+            ret += js
+            ret += "\n</script>\n"
+            return HTML(ret)
+    except Exception as ex:
+        print(ex)
 
 
 def get_class(meth):
-    """
+    """ Return the class of method meth
+        
         Taken from here: https://stackoverflow.com/a/25959545
     """
 
@@ -68,7 +73,10 @@ def get_class(meth):
                       meth.__qualname__.split('.<locals>', 1)[0].rsplit('.', 1)[0])
         if isinstance(cls, type):
             return cls
-    return getattr(meth, '__objclass__', None)  # handle special descriptor objects
+    ret = getattr(meth, '__objclass__', None)  # handle special descriptor objects
+    if ret == None:
+        raise ValueError("Couldn't find the class of method %s" % meth)
+    return ret
 
 def run(classOrMethodOrModule):    
     """ Runs test class or method or Module. Doesn't show code nor output in html.

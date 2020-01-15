@@ -315,9 +315,6 @@ def replace_py_rel(code, filepath):
     ret =  re.sub(r'import\s+sys\s*;?\s*\nsys\.path.append\([\'\"]((%s))[\'\"]\)\s*;?\s*' % upr,   
                 repl,
                 code)
-    ret = re.sub(r'(jupman.init\(\s*)[\'\"](%s)[\'\"](\s*\)\s*;?\s*)' % upr,
-                    r'\1\3',
-                    ret)
     return ret
 
 def replace_md_rel(code, filepath):
