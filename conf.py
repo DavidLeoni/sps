@@ -44,8 +44,8 @@ jm.chapter_patterns =  ['*/']
 jm.chapter_exclude_patterns =  ['[^_]*/','exams/', 'project/']
 
 # words used in ipynb files - you might want to translate these in your language. Use plural.
-jm.ipynb_solution = "SOLUTIONS"
-jm.ipynb_exercise = "EXERCISES"
+jm.ipynb_solutions = "SOLUTIONS"
+jm.ipynb_exercises = "EXERCISES"
 
 #NOTE: the following string is not just a translation, it's also a command that   when building the exercises
 #      removes the content after it in the Python cell it is contained in
@@ -406,7 +406,18 @@ def setup(app):
             jm.zip_folder(folder)
         jm.zip_folders('exams/*/solutions', 
                         lambda x:  '%s-%s-exam' % (jm.filename, x.split('/')[-2]))
-        jm.zip_paths(['project'], '_static/generated/project-template')
+        # Build Project
+        def sub(x):
+            if x == 'requirements.txt':
+                return 'NAME-SURNAME-ID/requirements.txt'
+            elif x.startswith('project/'):
+                return 'NAME-SURNAME-ID/%s' % x[len('project/'):]
+            else:
+                return x
+
+        jm.zip_paths(['project', 'requirements.txt'], 
+                     '_static/generated/project-template',
+                     patterns = sub)
         
 
 source_parsers = {

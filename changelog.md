@@ -5,13 +5,18 @@ Jupman Jupyter Manager
 
 http://jupman.readthedocs.com
 
-## 3.0 - December 29th, 2019
+## January 16th 2020 - 3.1
+
+- removed jupman.init root parameter
+- bugfixes
+
+## December 29th 2019 - 3.0
 
 - much simplified folder structure 
-  - https://github.com/DavidLeoni/jupman/issues/33
+  - [Issue 33](https://github.com/DavidLeoni/jupman/issues/33)
 
 - removed solutions from header requirement 
-  - https://github.com/DavidLeoni/jupman/issues/32
+  - [Issue 32](https://github.com/DavidLeoni/jupman/issues/32)
 
 - introduced tests (pytest, hypothesis)
 - removed old_news in favor of changelog.md
@@ -21,30 +26,30 @@ http://jupman.readthedocs.com
     - set up unicode mappings
 - several fixes
 
-## 2.0 - September 24th, 2018
+## September 24th 2018 - 2.0
 
 - now using index.ipynb as home. Hurray !
 
-## 1.0 - September 19th, 2018
+## September 19th 2018 - 1.0
 
 - fixed build.py
 - added html templates examples
 - cleaned toc (was showing too much when loading)
 
 
-## 0.9 - August 26th, 2018
+## August 26th 2018 - 0.9
 
 - implemented generation of exercises from solutions
-  see https://github.com/DavidLeoni/jupman/issues/14
+  [Issue 14(https://github.com/DavidLeoni/jupman/issues/14)
 - reverted to old jupman.init() code
-  see https://github.com/DavidLeoni/jupman/issues/12
+  [Issue 12](https://github.com/DavidLeoni/jupman/issues/12)
 
-## v0.8 - August 12th, 2018
+## August 12th 2018 - 0.8
 
 - Prepended all functions in jupman.py with `jupman_`
 
 - replaced index with proper homepage. 
-  see https://github.com/DavidLeoni/jupman/issues/11
+  see [Issue 11](https://github.com/DavidLeoni/jupman/issues/11)
   
   - from now on you need home.ipynb file, because replacing index.rst is a nightmare! 
   - new index.rst is just a placeholder which simply redirects to home.html. Do not modify it.
@@ -52,10 +57,10 @@ http://jupman.readthedocs.com
   
 - exercises ipynb can now stay in exercises/ folder; when exercises are zipped,
   jupman automatically adds to the zip the required site files. 
-  see https://github.com/DavidLeoni/jupman/issues/12
+  see [Issue 12](https://github.com/DavidLeoni/jupman/issues/12)
   
 - Tried %run at beginning of notebooks, without much satisfaction
-  (see discussion in https://github.com/DavidLeoni/jupman/issues/12): 
+  (see discussion in [Issue 12](https://github.com/DavidLeoni/jupman/issues/12)): 
   
 - disabled toc by default in html files. To enable it, in python use `%run -i ../../jupman --toc`
 - renamed past-exams directory from 'past-exams' to 'exams'
@@ -69,7 +74,7 @@ http://jupman.readthedocs.com
 - Fixes https://github.com/DavidLeoni/jupman/issues/2 : 
   now toc is present in local build for pdfs 
 
-## V0.7 - August 3rd, 2018
+## August 3rd 2018 - 0.7
 
 - added jupman.py pytut() for displaying Python tutor in the cells
 - added  jupman.py toc=False option to jupman.py init to disable toc

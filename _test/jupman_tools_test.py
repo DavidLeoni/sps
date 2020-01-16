@@ -211,3 +211,25 @@ def test_ignore_spaces():
     
 
 
+def test_validate_code_tags():
+    jm = make_jm()
+    assert jm.validate_code_tags('# SOLUTION\nbla', 'some_file') == 1
+    assert jm.validate_code_tags('  # SOLUTION\nbla', 'some_file') == 1
+    assert jm.validate_code_tags('something before  # SOLUTION\nbla', 'some_file') == 0
+    # pairs count as one
+    assert jm.validate_code_tags('#jupman-raise\nsomething#/jupman-raise', 'some_file') == 1
+    assert jm.validate_code_tags("""
+    hello
+    #jupman-raise
+    something
+    #/jupman-raise
+    #jupman-raise
+    bla
+    #/jupman-raise""", 'some_file') == 2
+
+def test_validate_markdown_tags():
+    jm = make_jm()
+
+    assert jm.validate_markdown_tags('**ANSWER**: hello', 'some_file') == 1
+    assert jm.validate_markdown_tags('  **ANSWER**: hello', 'some_file') == 1
+    assert jm.validate_markdown_tags('bla  **ANSWER**: hello', 'some_file') == 0

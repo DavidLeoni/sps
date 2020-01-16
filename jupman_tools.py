@@ -354,7 +354,7 @@ def replace_ipynb_rel(nb_node, filepath):
             # markdown cells: fix rel urls
             cell.source = replace_md_rel(cell.source, filepath)
         elif cell.cell_type == "raw" and \
-                cell.metadata['raw_mimetype'] == 'text/html':
+                'raw_mimetype' in cell.metadata and cell.metadata['raw_mimetype'] == 'text/html':
             cell.source = replace_html_rel(cell.source, filepath)             
         else:
             #TODO latex ?
@@ -489,8 +489,33 @@ class Jupman:
         ret = replace_py_rel(ret, filepath)
         return ret            
 
-        
-    def validate_tags(self, text, fname):
+    def validate_tags(self, fname):
+        """ Validates jupman tags in file fname
+        """
+        ret = 0
+        if fname.endswith('.ipynb'):
+            import nbformat        
+            nb_node = nbformat.read(fname, nbformat.NO_CONVERT)        
+            for cell in nb_node.cells:            
+                if cell.cell_type == "code":    
+                    ret += self.validate_code_tags(cell.source, fname)
+                elif cell.cell_type == "markdown":
+                    ret += self.validate_markdown_tags(cell.source, fname)                
+
+        elif fname.endswith('.py'):
+            with open(fname) as f:
+                ret += self.validate_code_tags(f.read(), f)
+        else:
+            raise ValueError('File format not supported for %s' % fname)
+        return ret
+
+    def validate_code_tags(self, text, fname):
+        """ Validates text which was read from file fname:
+
+            - raises ValueError on mismatched tags
+            - returns the number of jupman tags found
+        """
+                
         tag_starts = {}
         tag_ends = {}
 
@@ -509,7 +534,10 @@ class Jupman:
         write_solution_here_count = len(re.compile(self.write_solution_here).findall(text))
         solution_count = len(re.compile(self.solution).findall(text))
         
-        return sum(tag_starts.values()) + write_solution_here_count + solution_count > 0
+        return sum(tag_starts.values()) + write_solution_here_count + solution_count
+
+    def validate_markdown_tags(self, text, fname):
+        return len(re.compile(self.markdown_answer).findall(text))
 
 
     def _copy_test(self, source_abs_fn, source_fn,  dest_fn):
@@ -587,9 +615,9 @@ class Jupman:
         info("  Generating %s" % exercise_dest_fn)
 
         with open(source_abs_fn) as sol_source_f:
-            solution_text = sol_source_f.read()                                
+            
 
-            found_tag = self.validate_tags(solution_text, source_abs_fn)                      
+            found_tag = self.validate_tags(source_abs_fn)                      
             if not found_tag and not os.path.isfile(exercise_abs_filename) :
                 error("There is no exercise file and couldn't find any jupman tag in solution file for generating exercise !" +\
                     "\n  solution: %s\n  exercise: %s" % (source_abs_fn, exercise_abs_filename))                                                                      
@@ -624,8 +652,8 @@ class Jupman:
                     nbformat.write(nb_node, exercise_dest_f)
                 
                 
-                elif source_abs_fn.endswith('.py'):                    
-                    exercise_text = self.sol_to_ex_code(solution_text, source_abs_fn)
+                elif source_abs_fn.endswith('.py'):                       
+                    exercise_text = self.sol_to_ex_code(sol_source_f.read(), source_abs_fn)
                     #debug("FORMATTED TEXT=\n%s" % exercise_text)
                     exercise_dest_f.write(exercise_text)                    
                 else:
@@ -723,8 +751,10 @@ class Jupman:
         """ Takes source folder and creates a zip for each subfolder 
             filling it with processed files.
 
+            selector: a glob pattern 
             renamer: (optional) function which takes source folder names 
                       and gives the corresponding zip name to generate
+                      WITHOUT the .zip extension
         """
         source_folders =  glob.glob(selector)
         

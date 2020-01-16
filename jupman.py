@@ -152,7 +152,8 @@ def pytut():
 
         params = {'code':new_code,
                   'cumulative': 'false',
-                  'py':3,
+                  'py':3, # NOTE: if you put `py3anaconda` in Jupyter you get 
+                          #       Error: https execution of non-Python code is not currently supported. [#nonPythonHttps]
                   'curInstr':0} 
 
         # BEWARE YOU NEED HTTP _S_ !    
