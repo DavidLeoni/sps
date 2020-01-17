@@ -107,7 +107,8 @@ extensions = [
     'sphinx.ext.mathjax',
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
-    'sphinx.ext.ifconfig'
+    'sphinx.ext.ifconfig',
+    'recommonmark'
     #, 'rst2pdf.pdfbuilder'
 ]
 
@@ -420,8 +421,9 @@ def setup(app):
                      patterns = sub)
         
 
-source_parsers = {
-    '.md': CommonMarkParser,
-}
 
-source_suffix = ['.rst', '.md']
+source_suffix = {
+    '.rst': 'restructuredtext',
+    '.txt': 'markdown',
+    '.md': 'markdown'
+}

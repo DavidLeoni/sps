@@ -9,6 +9,10 @@ http://jupman.readthedocs.com
 
 - removed jupman.init root parameter
 - bugfixes
+- upgraded nbsphinx from 0.3.4 to 0.5.0
+- upgraded sphinx_rtd_theme from 0.2.5b1 to 0.4.3
+- upgraded sphinx from 1.7.6 to 2.3.1
+- upgraded recommonmark from 0.4.0 to 0.6.0
 
 ## December 29th 2019 - 3.0
 
