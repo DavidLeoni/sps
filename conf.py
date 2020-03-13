@@ -218,7 +218,9 @@ html_js_files = [
 html_css_files = [
     'css/jupman.css',
 ]
-
+html_sidebars = {
+   '**': ['globaltoc.html', 'sourcelink.html', 'searchbox.html'],
+}
 
 # -- Options for HTMLHelp output ------------------------------------------
 
