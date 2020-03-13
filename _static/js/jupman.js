@@ -243,20 +243,29 @@ var jupman = {
         }        
 
         
-        var link = $('a.reference.internal[href^="toc.html"]')
-        
-        // WARNING: THIS IS A POTENTIAL BUG: IF 'index' has a translated name, it won't work !!!
-        link = link.not('[href^="toc.html#index"]');
+        var fix = function(prefix){
 
-        var span = $('a.reference.internal[href^="toc.html"] > span');
-        span.off('click')
+            s = 'a.reference.internal[href^="' + prefix + 'toc.html"]'
 
-        link.on('click', function (ev) {
-            ev.preventDefault();
-            toggleCurrent($(this));
-            ev.stopPropagation();
-            return false;
-        });
+            // DIRTY: THIS IS A POTENTIAL BUG: IF 'index' is not the last one it won't be selected !
+           //  Made so because index may be translated in other languages   
+
+            var link = $(s).not(":last")
+            var span = $(s + ' > span');
+            span.off('click')
+
+            link.on('click', function (ev) {
+                ev.preventDefault();
+                toggleCurrent($(this));
+                ev.stopPropagation();
+                return false;
+            });
+        }
+
+        fix('')
+        fix('../')
+        fix('../../')    // probably useless but just in case ...
+        fix('../../../') // probably useless but just in case ... 
 
         console.log("Finished initializing jupman.js in ReadTheDocs")    
     },

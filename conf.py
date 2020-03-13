@@ -198,10 +198,12 @@ html_theme_options = {
     'collapse_navigation': False,
 }
 
+# NOTE: in order to have complete collapsible menu, 
+#       IT IS *FUNDAMENTAL* FOR html_theme to be defined
+#       see https://github.com/DavidLeoni/jupman/issues/38
+html_theme = 'sphinx_rtd_theme'    
 if not on_rtd:
-
     import sphinx_rtd_theme
-    html_theme = 'sphinx_rtd_theme'
     html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]    
 
 # Add any paths that contain custom static files (such as style sheets) here,
@@ -218,9 +220,6 @@ html_js_files = [
 html_css_files = [
     'css/jupman.css',
 ]
-html_sidebars = {
-   '**': ['globaltoc.html', 'sourcelink.html', 'searchbox.html'],
-}
 
 # -- Options for HTMLHelp output ------------------------------------------
 
