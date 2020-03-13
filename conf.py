@@ -193,10 +193,12 @@ todo_include_todos = True
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-# html_theme_options = {}
+html_theme_options = {
+    # fix for https://github.com/DavidLeoni/jupman/issues/38
+    'collapse_navigation': False,
+}
 
 if not on_rtd:
-
 
     import sphinx_rtd_theme
     html_theme = 'sphinx_rtd_theme'
@@ -208,6 +210,14 @@ if not on_rtd:
 
 html_static_path = ['_static/'] 
 #html_extra_path = [] 
+
+html_js_files = [
+    'js/jupman.js',
+]
+
+html_css_files = [
+    'css/jupman.css',
+]
 
 
 # -- Options for HTMLHelp output ------------------------------------------
@@ -233,6 +243,7 @@ templates_path = ['_templates']
 #html_additional_pages = {
 #    'google3dea3b29336ca0e5': 'google3dea3b29336ca0e5.html',
 #}
+
 
 
 
@@ -401,8 +412,6 @@ def setup(app):
                                     'enable_eval_rst':True
                                 }, True)
         app.add_transform(AutoStructify)
-        app.add_javascript('_static/js/jupman.js')
-        app.add_stylesheet('_static/css/jupman.css')
         for folder in jm.get_exercise_folders():
             jm.zip_folder(folder)
         jm.zip_folders('exams/*/solutions', 
