@@ -22,3 +22,17 @@ li.toctree-l1 > a > .toctree-expand {
  .wy-nav-side {
    background-color: #343d2d 
  }
+
+
+/* Fixes for https://github.com/DavidLeoni/jupman/issues/17 */
+ 
+/* code overflow */
+div.input_area  {
+    overflow:visible !important
+}
+
+/* too much output  */
+div.output_area.docutils.container:not(.rendered_html){ 
+    
+    max-height:600px !important;
+}

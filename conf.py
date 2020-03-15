@@ -35,10 +35,12 @@ jm.filename = 'jupman'   # The filename without the extension
 # common files for exercise and exams as paths. Paths are intended relative to the project root. Globs like /**/* are allowed.
 
 jm.chapter_files = ['jupman.py', 'my_lib.py', 'img/cc-by.png', 
-                         
+                    
                     '_static/js/jupman.js',  # these files are injected when you call jupman.init()
                     '_static/css/jupman.css', 
-                    '_static/js/toc.js']
+                    '_static/js/toc.js',
+                    
+                    '_static/js/pytutor-embed.bundle.min.js.zip',]
 
 jm.chapter_patterns =  ['*/']
 jm.chapter_exclude_patterns =  ['[^_]*/','exams/', 'project/']
