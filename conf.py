@@ -40,7 +40,7 @@ jm.chapter_files = ['jupman.py', 'my_lib.py', 'img/cc-by.png',
                     '_static/css/jupman.css', 
                     '_static/js/toc.js',
                     
-                    '_static/js/pytutor-embed.bundle.min.js.zip',]
+                    '_static/js/pytutor-embed.bundle.min.js',]
 
 jm.chapter_patterns =  ['*/']
 jm.chapter_exclude_patterns =  ['[^_]*/','exams/', 'project/']
@@ -216,7 +216,8 @@ html_static_path = ['_static/']
 #html_extra_path = [] 
 
 html_js_files = [
-    'js/jupman.js',  # shared among jupyter and ReadTheDocs
+    'js/jupman.js',   # shared among jupyter and ReadTheDocs
+    'js/pytutor-embed.bundle.min.js',  
 ]
 
 html_css_files = [

@@ -9,7 +9,22 @@ import unittest
 import inspect
 import os
 import argparse
+
+def detect_relpath(in_cells):
+    """ Hacky way to find out relative path to jupman.py
+
+        in_cells: "In" cells of a notebook
+    """
+    import re        
         
+    for code in in_cells:        
+        rs =  re.findall(r'import\s+sys\s*;?\s*\nsys\.path.append\([\'\"]((\.\./)+)[\'\"]\)\s*;?\s*\nimport\s+jupman', code)
+        
+        if rs:
+            return rs[0][0]   
+    return ''
+
+
 def init(toc=False):
     """ Injects notebooks with js and css from _static
     
@@ -2634,37 +2649,23 @@ def pytut():
     import uuid
     div_id = 'jm'+str(uuid.uuid4())
     json_id = 'json-' + div_id
+                    
+    relpath = detect_relpath(notebook_globals["In"]) 
     
-    root = os.path.dirname(os.path.abspath(__file__))
-    _static = os.path.join(root, '_static')                
-    
-    found_bundle = False
-    for cout in notebook_globals["Out"]:    
-        obj = notebook_globals["Out"][cout]
-        if isinstance(obj, HTML):
-            if "window.addVisualizerToPage" in obj.data and "pythontutor.com" in obj.data:
-                found_bundle = True
-                break
-    if found_bundle:            
-        inject = ""
-    else:            
-        
-        import zipfile
-        import io
-        with zipfile.ZipFile("%s/js/pytutor-embed.bundle.min.js.zip" % _static, 'r') as zipper:
-            with zipper.open('pytutor-embed.bundle.min.js', 'r') as fp:
-                pytutor_bundle = io.TextIOWrapper(io.BytesIO(fp.read()), newline='', encoding='UTF-8').read()                
+    inject = ""
 
-        inject =  """<script type="application/javascript">
-                        %s
-                    </script>""" % pytutor_bundle
-
-    inject += """  <script id="%s" type="application/json" >
+    inject +=  """
+            <script src="%s_static/js/pytutor-embed.bundle.min.js" type="application/javascript"></script>
+    """ % relpath
+                    
+    inject += """ 
+                    <script id="%s" type="application/json" >
                         %s
                     </script>
                     <div id="%s" class="pytutorVisualizer"> </div>
             """ % (json_id, trace, div_id)
-    inject += """ <style>
+    inject += """ 
+                    <style>
                     .vizLayoutTd {
                         background-color: #fff !important;
                     }
@@ -2685,7 +2686,8 @@ def pytut():
                     addVisualizerToPage(trace, '%s',{'embeddedMode' : false})  
                     
                     
-                    // set overflow for pytuts
+                    // set overflow for pytuts - need to do in python as css 
+                    // does not allow parent selection
                     var pytuts = $('.pytutorVisualizer')
                     pytuts.closest('div.output_html.rendered_html.output_result')
                             .css('overflow-x', 'visible')
@@ -2696,6 +2698,6 @@ def pytut():
                 })()
                 </script>
                 
-                """ % (json_id, div_id)
+                """ % (json_id, div_id)   
     
     return HTML(inject)
