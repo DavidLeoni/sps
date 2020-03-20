@@ -2653,50 +2653,55 @@ def pytut():
     relpath = detect_relpath(notebook_globals["In"]) 
     
     inject = ""
-
+    
+    # will end up reloading multiple times the script, not very efficient 
     inject +=  """
-            <script src="%s_static/js/pytutor-embed.bundle.min.js" type="application/javascript"></script>
+        <script src="%s_static/js/pytutor-embed.bundle.min.js" type="application/javascript"></script>
     """ % relpath
                     
     inject += """ 
-                    <script id="%s" type="application/json" >
-                        %s
-                    </script>
-                    <div id="%s" class="pytutorVisualizer"> </div>
-            """ % (json_id, trace, div_id)
+        <script id="%s" type="application/json" >
+            %s
+        </script>
+        <div id="%s" class="pytutorVisualizer"> </div>
+""" % (json_id, trace, div_id)
     inject += """ 
-                    <style>
-                    .vizLayoutTd {
-                        background-color: #fff !important;
-                    }
-                                        
+        <style>
+        .vizLayoutTd {
+            background-color: #fff !important;
+        }
+                            
 
-                    /* 'Edit this code' link, hiding because replaces browser tab !!!*/
-                    #editCodeLinkDiv {
-                        display:none;  
-                    }
-                    </style>   
+        /* 'Edit this code' link, hiding because replaces browser tab !!!*/
+        #editCodeLinkDiv {
+            display:none;  
+        }
+        </style>   
     """
     inject +=   """                        
-                <script>
-                (function(){
+        <script>
+        (function(){
 
-                    var trace = JSON.parse(document.getElementById('%s').innerHTML);
-                    // NOTE: id without #
-                    addVisualizerToPage(trace, '%s',{'embeddedMode' : false})  
-                    
-                    
-                    // set overflow for pytuts - need to do in python as css 
-                    // does not allow parent selection
-                    var pytuts = $('.pytutorVisualizer')
-                    pytuts.closest('div.output_html.rendered_html.output_result')
-                            .css('overflow-x', 'visible')
-                
-                    //pytuts.closest('div.output_html.rendered_html.output_result')
-                    //      .css('background-color','red')                
-                    
-                })()
-                </script>
+            var trace = JSON.parse(document.getElementById('%s').innerHTML);                                        
+            // NOTE 1: id without #
+            // NOTE 2 - maybe there are more predictable ways, but this will work anyway
+            //        - id should be number
+            visualizerIdOverride = Math.trunc(Math.random() * 100000000000)
+            addVisualizerToPage(trace, '%s',{'embeddedMode' : false,
+                                             'visualizerIdOverride':visualizerIdOverride})  
+            
+            
+            // set overflow for pytuts - need to do in python as css 
+            // does not allow parent selection
+            var pytuts = $('.pytutorVisualizer')
+            pytuts.closest('div.output_html.rendered_html.output_result')
+                    .css('overflow-x', 'visible')
+        
+            //pytuts.closest('div.output_html.rendered_html.output_result')
+            //      .css('background-color','red')                
+            
+        })()
+        </script>
                 
                 """ % (json_id, div_id)   
     
