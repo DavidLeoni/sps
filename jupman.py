@@ -2671,6 +2671,9 @@ def pytut():
             background-color: #fff !important;
         }
                             
+        #pyStdout {
+            min-height:25px;
+        }
 
         /* 'Edit this code' link, hiding because replaces browser tab !!!*/
         #editCodeLinkDiv {
