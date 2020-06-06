@@ -34,7 +34,7 @@ jm.filename = 'jupman'   # The filename without the extension
 
 # common files for exercise and exams as paths. Paths are intended relative to the project root. Globs like /**/* are allowed.
 
-jm.chapter_files = ['jupman.py', 'my_lib.py', 'img/cc-by.png', 
+jm.chapter_files = ['jupman.py', 'my_lib.py', '_static/img/cc-by.png', 
                     
                     '_static/js/jupman.js',  # these files are injected when you call jupman.init()
                     '_static/css/jupman.css', 
