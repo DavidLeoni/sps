@@ -110,7 +110,8 @@ extensions = [
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
     'sphinx.ext.ifconfig',
-    'recommonmark'
+    'recommonmark',
+    'readthedocs_ext.readthedocs'    
     #, 'rst2pdf.pdfbuilder'
 ]
 
