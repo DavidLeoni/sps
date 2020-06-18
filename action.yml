@@ -2,10 +2,10 @@
 name: 'Sphinx Docs build with ReadTheDocs Docker Image'
 description: ''
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  rtd-prj-name: 
+    description: 'ReadTheDocs project name'
     required: true
-    default: 'World'
+    default: 'jupman'
 outputs:
   time: # id of output
     description: 'The time we greeted you'
@@ -13,4 +13,6 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.who-to-greet }}
+    - ${{ github.repository }}
+    - ${{ inputs.rtd-prj-name }}
+    
