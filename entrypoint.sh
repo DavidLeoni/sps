@@ -1,5 +1,6 @@
 #!/bin/sh
 set -o errexit #abort if any command fails
+set +v
 
 #github.repository         Codertocat/Hello-World
 #github.repository_owner   Codertocat
@@ -9,8 +10,8 @@ GIT_URL=$1
 
 RTD_PRJ_NAME=$2
 
-echo "     using GIT_URL=$GIT_URL"
-echo "using RTD_PRJ_NAME=$RTD_PRJ_NAME"
+echo "using        GIT_URL=$GIT_URL"
+echo "using   RTD_PRJ_NAME=$RTD_PRJ_NAME"
 
 # Reproduce build of ReadTheDocs --- START
 
@@ -75,4 +76,3 @@ mv -f /home/docs/checkouts/readthedocs.org/user_builds/$RTD_PRJ_NAME/checkouts/l
 
 # Reproduce build of ReadTheDocs  -- END
 
-touch _build/html/.nojekyll
