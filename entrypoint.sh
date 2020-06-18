@@ -68,7 +68,8 @@ cat latexmkrc
 
 latexmk -r latexmkrc -pdf -f -dvi- -ps- -jobname=$RTD_PRJ_NAME -interaction=nonstopmode 
 
-mv -f $RTD_PRJ_PATH/checkouts/latest/./_build/latex/$RTD_PRJ_NAME.pdf $RTD_PRJ_PATH/artifacts/latest/sphinx_pdf/$RTD_PRJ_NAME.pdf
+#NOTE: using cp instead of mv
+cp -f $RTD_PRJ_PATH/checkouts/latest/./_build/latex/$RTD_PRJ_NAME.pdf $RTD_PRJ_PATH/artifacts/latest/sphinx_pdf/$RTD_PRJ_NAME.pdf
 
 #NOTE: MANUALLY ADDED !
 cd $RTD_PRJ_PATH/checkouts/latest
@@ -76,7 +77,8 @@ cd $RTD_PRJ_PATH/checkouts/latest
 #NOTE: in original log line is prepended by 'python '
 $RTD_PRJ_PATH/envs/latest/bin/sphinx-build -T -b epub -d _build/doctrees-epub -D language=en . _build/epub
 
-mv -f $RTD_PRJ_PATH/checkouts/latest/./_build/epub/$RTD_PRJ_NAME.epub $RTD_PRJ_PATH/artifacts/latest/sphinx_epub/$RTD_PRJ_NAME.epub 
+#NOTE: using cp instead of mv
+cp -f $RTD_PRJ_PATH/checkouts/latest/./_build/epub/$RTD_PRJ_NAME.epub $RTD_PRJ_PATH/artifacts/latest/sphinx_epub/$RTD_PRJ_NAME.epub 
 
 # Reproduce build of ReadTheDocs  -- END
 
