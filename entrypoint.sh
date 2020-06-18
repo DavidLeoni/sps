@@ -40,6 +40,8 @@ if [ -d "/github/workspace" ]; then
   echo "Found Github Actions environment, redirecting _build to /github/workspace/"  
   ln -s /github/workspace/  $RTD_PRJ_PATH/checkouts/latest/_build
 fi
+echo "TODO EXITING NOW FOR TESTING PURPOSES .."
+exit 0
 
 python3.7 -mvirtualenv  $RTD_PRJ_PATH/envs/latest 
 
