@@ -29,6 +29,10 @@ mkdir -p /home/docs/checkouts/readthedocs.org/user_builds/$RTD_PRJ_NAME/artifact
 mkdir -p /home/docs/checkouts/readthedocs.org/user_builds/$RTD_PRJ_NAME/artifacts/latest/sphinx_epub
 
 touch /home/docs/checkouts/readthedocs.org/user_builds/$RTD_PRJ_NAME/checkouts/latest/CIAO.TXT
+mkdir -p /home/docs/checkouts/readthedocs.org/user_builds/$RTD_PRJ_NAME/checkouts/_build/html/
+echo PROVA > /home/docs/checkouts/readthedocs.org/user_builds/$RTD_PRJ_NAME/checkouts/_build/html/index.html
+echo PROVA > /home/docs/checkouts/readthedocs.org/user_builds/$RTD_PRJ_NAME/artifacts/latest/sphinx_pdf/$RTD_PRJ_NAME.pdf
+echo PROVA > /home/docs/checkouts/readthedocs.org/user_builds/$RTD_PRJ_NAME/artifacts/latest/sphinx_epub/$RTD_PRJ_NAME.epub
 exit 0
 
 #NOTE: MANUALLY ADDED !
