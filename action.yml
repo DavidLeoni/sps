@@ -2,12 +2,11 @@
 name: 'Sphinx Docs build with ReadTheDocs Docker Image'
 description: ''
 inputs:
-  repository:
-    description: 'Repository name with owner. For example, actions/checkout'
+  git_url:
+    description: 'Full git url to clone the repo'
     required: true
   rtd-prj-name: 
-    description: 'ReadTheDocs project name'
-    required: true
+    description: 'ReadTheDocs project name'    
     default: 'jupman'
 outputs:
   time: # id of output
@@ -16,6 +15,6 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.repository }}
+    - ${{ inputs.git_url }}
     - ${{ inputs.rtd-prj-name }}
     
