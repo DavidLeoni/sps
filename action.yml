@@ -2,6 +2,9 @@
 name: 'Sphinx Docs build with ReadTheDocs Docker Image'
 description: ''
 inputs:
+  repository:
+    description: 'Repository name with owner. For example, actions/checkout'
+    default: ${{ github.repository }}
   rtd-prj-name: 
     description: 'ReadTheDocs project name'
     required: true
@@ -13,6 +16,6 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ github.repository }}
+    - ${{ inputs.repository }}
     - ${{ inputs.rtd-prj-name }}
     

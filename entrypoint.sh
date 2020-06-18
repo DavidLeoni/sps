@@ -5,7 +5,7 @@ set -o errexit #abort if any command fails
 #github.repository_owner   Codertocat
 
 #https://github.com/OWNER/PRJ.git
-GIT_URL=https://github.com/$1.git
+REPOSITORY=https://github.com/$1.git
 
 RTD_PRJ_NAME=$2
 
@@ -20,7 +20,7 @@ mkdir -p /home/docs/checkouts/readthedocs.org/user_builds/$RTD_PRJ_NAME/checkout
 #NOTE: MANUALLY ADDED !
 cd /home/docs/checkouts/readthedocs.org/user_builds/$RTD_PRJ_NAME/checkouts/latest
 
-git clone --no-single-branch --depth 50 $GIT_URL . 
+git clone --no-single-branch --depth 50 $REPOSITORY . 
 
 git checkout --force origin/master 
 
