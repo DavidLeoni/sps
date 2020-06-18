@@ -16,21 +16,16 @@ echo "using   RTD_PRJ_NAME=$RTD_PRJ_NAME"
 echo "using   REQUIREMENTS=$REQUIREMENTS"
 echo "using   RTD_PRJ_PATH=$RTD_PRJ_PATH"
 
-if [ -d "/github/workspace" ]; then  
-  echo "Found Github Actions environment, redirecting _build to /github/workspace/"
-  mkdir -p $RTD_PRJ_PATH/checkouts/latest/
-  ln -s /github/workspace/  $RTD_PRJ_PATH/checkouts/latest/_build
-fi
 
 # Reproduce build of ReadTheDocs --- START
 
-#NOTE: MANUALLY ADDED !
+# MANUALLY ADDED !
 mkdir -p $RTD_PRJ_PATH/checkouts/latest/
-#NOTE: MANUALLY ADDED !
+# MANUALLY ADDED !
 mkdir -p $RTD_PRJ_PATH/artifacts/latest/sphinx_pdf
-#NOTE: MANUALLY ADDED !
+# MANUALLY ADDED !
 mkdir -p $RTD_PRJ_PATH/artifacts/latest/sphinx_epub
-#NOTE: MANUALLY ADDED !
+# MANUALLY ADDED !
 cd $RTD_PRJ_PATH/checkouts/latest
 
 
@@ -39,6 +34,12 @@ git clone --no-single-branch --depth 50 $GIT_URL .
 git checkout --force origin/master 
 
 git clean -d -f -f
+
+# MANUALLY ADDED !
+if [ -d "/github/workspace" ]; then  
+  echo "Found Github Actions environment, redirecting _build to /github/workspace/"  
+  ln -s /github/workspace/  $RTD_PRJ_PATH/checkouts/latest/_build
+fi
 
 python3.7 -mvirtualenv  $RTD_PRJ_PATH/envs/latest 
 
