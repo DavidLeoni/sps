@@ -44,6 +44,11 @@ echo PROVA > $RTD_PRJ_PATH/checkouts/latest/_build/latex/$RTD_PRJ_NAME.pdf
 mkdir -p $RTD_PRJ_PATH/checkouts/latest/_build/epub/
 echo PROVA > $RTD_PRJ_PATH/checkouts/latest/_build/epub/$RTD_PRJ_NAME.epub
 echo "TODO EXITING NOW FOR TESTING PURPOSES .."
+# MANUALLY ADDED !
+if [ -d "/github/workspace" ]; then  
+  echo "Found Github Actions environment, moving _build content to /github/workspace/"  
+  mv _build/* /github/workspace
+fi
 exit 0
 
 python3.7 -mvirtualenv  $RTD_PRJ_PATH/envs/latest 
