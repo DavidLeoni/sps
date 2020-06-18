@@ -6,8 +6,11 @@ inputs:
     description: 'Full git url to clone the repo'
     required: true
   rtd-prj-name: 
-    description: 'ReadTheDocs project name'    
+    description: 'ReadTheDocs project name (not mandatory)'
     default: 'jupman'
+  requirements: 
+    description: 'requirements file for pip install'    
+    default: 'requirements.txt'
 outputs:
   time: # id of output
     description: 'The time we greeted you'
@@ -17,4 +20,5 @@ runs:
   args:
     - ${{ inputs.git_url }}
     - ${{ inputs.rtd-prj-name }}
+    - ${{ inputs.requirements }}
     

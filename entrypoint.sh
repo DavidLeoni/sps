@@ -1,17 +1,24 @@
 #!/bin/sh
 set -o errexit #abort if any command fails
-set +v
+set -v
 
 #github.repository         Codertocat/Hello-World
 #github.repository_owner   Codertocat
 
 #https://github.com/DavidLeoni/jupman.git
 GIT_URL=$1
-
 RTD_PRJ_NAME=$2
+REQUIREMENTS=$3
 
 echo "using        GIT_URL=$GIT_URL"
 echo "using   RTD_PRJ_NAME=$RTD_PRJ_NAME"
+echo "using   REQUIREMENTS=$REQUIREMENTS"
+
+pwd
+id
+ls -la /github/workspace
+echo bla > /github/workspace/ciao.txt
+exit 0
 
 # Reproduce build of ReadTheDocs --- START
 
@@ -36,7 +43,7 @@ python3.7 -mvirtualenv  /home/docs/checkouts/readthedocs.org/user_builds/$RTD_PR
 /home/docs/checkouts/readthedocs.org/user_builds/$RTD_PRJ_NAME/envs/latest/bin/python -m pip install --upgrade --no-cache-dir Pygments==2.3.1 setuptools==41.0.1 docutils==0.14 mock==1.0.1 pillow==5.4.1 "alabaster>=0.7,<0.8,!=0.7.5" commonmark==0.8.1 recommonmark==0.5.0 "sphinx<2" "sphinx-rtd-theme<0.5" "readthedocs-sphinx-ext<1.1"
 
 
-/home/docs/checkouts/readthedocs.org/user_builds/$RTD_PRJ_NAME/envs/latest/bin/python -m pip install --exists-action=w --no-cache-dir -r requirements-build.txt 
+/home/docs/checkouts/readthedocs.org/user_builds/$RTD_PRJ_NAME/envs/latest/bin/python -m pip install --exists-action=w --no-cache-dir -r $REQUIREMENTS
 
 cat conf.py
 
