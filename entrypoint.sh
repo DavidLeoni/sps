@@ -40,6 +40,12 @@ if [ -d "/github/workspace" ]; then
   echo "Found Github Actions environment, redirecting _build to /github/workspace/"  
   ln -s /github/workspace/  $RTD_PRJ_PATH/checkouts/latest/_build
 fi
+
+touch $RTD_PRJ_PATH/checkouts/latest/CIAO.TXT
+mkdir -p $RTD_PRJ_PATH/checkouts/latest/_build/html/
+echo PROVA > $RTD_PRJ_PATH/checkouts/latest/_build/html/index.html
+echo PROVA > $RTD_PRJ_PATH/artifacts/latest/sphinx_pdf/$RTD_PRJ_NAME.pdf
+echo PROVA > $RTD_PRJ_PATH/artifacts/latest/sphinx_epub/$RTD_PRJ_NAME.epub
 echo "TODO EXITING NOW FOR TESTING PURPOSES .."
 exit 0
 
