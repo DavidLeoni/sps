@@ -1,4 +1,10 @@
+
+#TRIAL WITH PYTHON ALPINE -- START
 FROM python:3-alpine
+#NOTE: there no apk in readthedocs
+RUN apk --no-cache add git make
+#TRIAL WITH PYTHON ALPINE -- END
+
 #FROM readthedocs/build:6.0
 
 #avoiding, setting them takes time in Actions
@@ -11,6 +17,7 @@ FROM python:3-alpine
 #LABEL "com.github.actions.icon"="globe"
 #LABEL "com.github.actions.color"="green"
 #LABEL "repository"="http://github.com/DavidLeoni/jupman"
+
 
 ADD entrypoint.sh /entrypoint.sh
 
