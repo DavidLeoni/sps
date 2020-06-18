@@ -13,13 +13,13 @@ jobs:
         git_url: https://github.com/DavidLeoni/jupman.git
         requirements: requirements-build.txt    
     - name: show the workspace output
-      run: ls -lR $GITHUB_WORKSPACE
+      run: tree -aC -L 2 $GITHUB_WORKSPACE
     - name: Commit documentation changes
       run: |
         git clone https://github.com/DavidLeoni/jupman.git --branch gh-pages --single-branch gh-pages
-        cp -r $GITHUB_WORKSPACE/user_builds/jupman/checkouts/latest/_build/html/* gh-pages/
-        cp -r $GITHUB_WORKSPACE/user_builds/jupman/artifacts/latest/sphinx_pdf/* gh-pages/
-        cp -r $GITHUB_WORKSPACE/user_builds/jupman/artifacts/latest/sphinx_epub/* gh-pages/
+        cp -r $GITHUB_WORKSPACE/html/* gh-pages/
+        cp -r $GITHUB_WORKSPACE/epub/*.epub gh-pages/
+        cp -r $GITHUB_WORKSPACE/latex/*.pdf gh-pages/
         cd gh-pages
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"

@@ -2,12 +2,12 @@
 set -o errexit #abort if any command fails
 set -v
 
-#github.repository         Codertocat/Hello-World
-#github.repository_owner   Codertocat
-
 #https://github.com/DavidLeoni/jupman.git
 GIT_URL=$1
+# es 'jupman' also used as name for pdfs and epubs
+# NOTE: you don't need to actually have a project on readthedocs servers!
 RTD_PRJ_NAME=$2
+#requirements.txt
 REQUIREMENTS=$3
 RTD_PRJ_PATH=/home/docs/checkouts/readthedocs.org/user_builds/$RTD_PRJ_NAME
 
@@ -16,33 +16,23 @@ echo "using   RTD_PRJ_NAME=$RTD_PRJ_NAME"
 echo "using   REQUIREMENTS=$REQUIREMENTS"
 echo "using   RTD_PRJ_PATH=$RTD_PRJ_PATH"
 
-if [ -d "/github/workspace" ]; then
-  
-  echo "Found Github Actions environment, redirecting output to /github/workspace/"
-  mkdir -p /github/workspace/user_builds
-  mkdir -p /github/workspace/artifacts
-  mkdir -p /home/docs/checkouts/readthedocs.org/
-  ln -s /github/workspace/user_builds   /home/docs/checkouts/readthedocs.org/user_builds  
+if [ -d "/github/workspace" ]; then  
+  echo "Found Github Actions environment, redirecting _build to /github/workspace/"
+  mkdir -p $RTD_PRJ_PATH/checkouts/latest/
+  ln -s /github/workspace/  $RTD_PRJ_PATH/checkouts/latest/_build
 fi
 
+# Reproduce build of ReadTheDocs --- START
 
 #NOTE: MANUALLY ADDED !
 mkdir -p $RTD_PRJ_PATH/checkouts/latest/
+#NOTE: MANUALLY ADDED !
 mkdir -p $RTD_PRJ_PATH/artifacts/latest/sphinx_pdf
+#NOTE: MANUALLY ADDED !
 mkdir -p $RTD_PRJ_PATH/artifacts/latest/sphinx_epub
-
-touch $RTD_PRJ_PATH/checkouts/latest/CIAO.TXT
-mkdir -p $RTD_PRJ_PATH/checkouts/latest/_build/html/
-echo PROVA > $RTD_PRJ_PATH/checkouts/latest/_build/html/index.html
-echo PROVA > $RTD_PRJ_PATH/artifacts/latest/sphinx_pdf/$RTD_PRJ_NAME.pdf
-echo PROVA > $RTD_PRJ_PATH/artifacts/latest/sphinx_epub/$RTD_PRJ_NAME.epub
-exit 0
-
 #NOTE: MANUALLY ADDED !
 cd $RTD_PRJ_PATH/checkouts/latest
 
-
-# Reproduce build of ReadTheDocs --- START
 
 git clone --no-single-branch --depth 50 $GIT_URL . 
 

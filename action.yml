@@ -6,14 +6,12 @@ inputs:
     description: 'Full git url to clone the repo'
     required: true
   rtd-prj-name: 
-    description: 'ReadTheDocs project name (not mandatory)'
+    description: 'ReadTheDocs project name - also used as name for pdfs and epubs. 
+                  NOTE: you don't need to actually have a project on readthedocs servers!'
     default: 'jupman'
   requirements: 
     description: 'requirements file for pip install'    
     default: 'requirements.txt'
-outputs:
-  time: # id of output
-    description: 'The time we greeted you'
 runs:
   using: 'docker'
   image: 'Dockerfile'
