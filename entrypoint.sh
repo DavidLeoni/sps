@@ -19,7 +19,7 @@ if [ -d "/github/workspace" ]; then
   echo "Found Github Actions environment, redirecting output to /github/workspace/"
   mkdir -p /github/workspace/user_builds
   mkdir -p /github/workspace/artifacts
-
+  mkdir -p /home/docs/checkouts/readthedocs.org/
   ln -s /github/workspace/user_builds   /home/docs/checkouts/readthedocs.org/user_builds  
 fi
 
