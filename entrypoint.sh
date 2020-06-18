@@ -25,6 +25,7 @@ mkdir -p $RTD_PRJ_PATH/checkouts/latest/
 mkdir -p $RTD_PRJ_PATH/artifacts/latest/sphinx_pdf
 # MANUALLY ADDED !
 mkdir -p $RTD_PRJ_PATH/artifacts/latest/sphinx_epub
+
 # MANUALLY ADDED !
 cd $RTD_PRJ_PATH/checkouts/latest
 
@@ -35,12 +36,15 @@ git checkout --force origin/master
 
 git clean -d -f -f
 
-# MANUALLY ADDED !
-if [ -d "/github/workspace" ]; then  
-  echo "Found Github Actions environment, redirecting _build to /github/workspace/"  
-  ln -s /github/workspace/  $RTD_PRJ_PATH/checkouts/latest/_build
-fi
-
+touch $RTD_PRJ_PATH/checkouts/latest/CIAO.TXT
+mkdir -p $RTD_PRJ_PATH/checkouts/latest/_build/html/
+echo PROVA > $RTD_PRJ_PATH/checkouts/latest/_build/html/index.html
+mkdir -p $RTD_PRJ_PATH/checkouts/latest/_build/latex/
+echo PROVA > $RTD_PRJ_PATH/checkouts/latest/_build/latex/$RTD_PRJ_NAME.pdf
+mkdir -p $RTD_PRJ_PATH/checkouts/latest/_build/epub/
+echo PROVA > $RTD_PRJ_PATH/checkouts/latest/_build/epub/$RTD_PRJ_NAME.epub
+echo "TODO EXITING NOW FOR TESTING PURPOSES .."
+exit 0
 
 python3.7 -mvirtualenv  $RTD_PRJ_PATH/envs/latest 
 
@@ -86,3 +90,8 @@ mv -f $RTD_PRJ_PATH/checkouts/latest/./_build/epub/$RTD_PRJ_NAME.epub $RTD_PRJ_P
 
 # Reproduce build of ReadTheDocs  -- END
 
+# MANUALLY ADDED !
+if [ -d "/github/workspace" ]; then  
+  echo "Found Github Actions environment, moving _build content to /github/workspace/"  
+  mv _build/* /github/workspace
+fi
