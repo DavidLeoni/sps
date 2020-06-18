@@ -4,7 +4,7 @@ description: ''
 inputs:
   repository:
     description: 'Repository name with owner. For example, actions/checkout'
-    default: ${{ github.repository }}
+    required: true
   rtd-prj-name: 
     description: 'ReadTheDocs project name'
     required: true
