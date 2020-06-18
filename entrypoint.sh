@@ -52,9 +52,6 @@ cat conf.py
 #NOTE: in original log line is prepended by 'python '
 $RTD_PRJ_PATH/envs/latest/bin/sphinx-build -T -E -b readthedocs -d _build/doctrees-readthedocs -D language=en . _build/html 
 
-#MANUALLY ADDED FOR GITHUB PAGES
-touch _build/html/.nojekyll
-
 #NOTE: in original log line is prepended by 'python '
 $RTD_PRJ_PATH/envs/latest/bin/sphinx-build -T -b readthedocssinglehtmllocalmedia -d _build/doctrees-readthedocssinglehtmllocalmedia -D language=en . _build/localmedia
 
