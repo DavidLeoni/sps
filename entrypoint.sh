@@ -14,19 +14,28 @@ echo "using        GIT_URL=$GIT_URL"
 echo "using   RTD_PRJ_NAME=$RTD_PRJ_NAME"
 echo "using   REQUIREMENTS=$REQUIREMENTS"
 
-pwd
-id
-ls -la /github/workspace
-echo bla > /github/workspace/ciao.txt
-exit 0
+if [ -d "/github/workspace" ]; then
+  
+  echo "Found Github Actions environment, redirecting output to /github/workspace/"
+  mkdir -p /github/workspace/user_builds
+  mkdir -p /github/workspace/artifacts
 
-# Reproduce build of ReadTheDocs --- START
+  ln -s /github/workspace/user_builds   /home/docs/checkouts/readthedocs.org/user_builds  
+fi
 
 #NOTE: MANUALLY ADDED !
-mkdir -p /home/docs/checkouts/readthedocs.org/user_builds/$RTD_PRJ_NAME/checkouts/latest
+mkdir -p /home/docs/checkouts/readthedocs.org/user_builds/$RTD_PRJ_NAME/checkouts/latest/
+mkdir -p /home/docs/checkouts/readthedocs.org/user_builds/$RTD_PRJ_NAME/artifacts/latest/sphinx_pdf
+mkdir -p /home/docs/checkouts/readthedocs.org/user_builds/$RTD_PRJ_NAME/artifacts/latest/sphinx_epub
+
+touch /home/docs/checkouts/readthedocs.org/user_builds/$RTD_PRJ_NAME/checkouts/latest/CIAO.TXT
+exit 0
 
 #NOTE: MANUALLY ADDED !
 cd /home/docs/checkouts/readthedocs.org/user_builds/$RTD_PRJ_NAME/checkouts/latest
+
+
+# Reproduce build of ReadTheDocs --- START
 
 git clone --no-single-branch --depth 50 $GIT_URL . 
 
@@ -66,8 +75,6 @@ cat latexmkrc
 
 latexmk -r latexmkrc -pdf -f -dvi- -ps- -jobname=$RTD_PRJ_NAME -interaction=nonstopmode 
 
-mkdir -p /home/docs/checkouts/readthedocs.org/user_builds/$RTD_PRJ_NAME/artifacts/latest/sphinx_pdf
-
 mv -f /home/docs/checkouts/readthedocs.org/user_builds/$RTD_PRJ_NAME/checkouts/latest/./_build/latex/$RTD_PRJ_NAME.pdf /home/docs/checkouts/readthedocs.org/user_builds/$RTD_PRJ_NAME/artifacts/latest/sphinx_pdf/$RTD_PRJ_NAME.pdf
 
 #NOTE: MANUALLY ADDED !
@@ -75,9 +82,6 @@ cd /home/docs/checkouts/readthedocs.org/user_builds/$RTD_PRJ_NAME/checkouts/late
 
 #NOTE: in original log line is prepended by 'python '
 /home/docs/checkouts/readthedocs.org/user_builds/$RTD_PRJ_NAME/envs/latest/bin/sphinx-build -T -b epub -d _build/doctrees-epub -D language=en . _build/epub
-
-#NOTE: MANUALLY ADDED !
-mkdir -p /home/docs/checkouts/readthedocs.org/user_builds/$RTD_PRJ_NAME/artifacts/latest/sphinx_epub
 
 mv -f /home/docs/checkouts/readthedocs.org/user_builds/$RTD_PRJ_NAME/checkouts/latest/./_build/epub/$RTD_PRJ_NAME.epub /home/docs/checkouts/readthedocs.org/user_builds/$RTD_PRJ_NAME/artifacts/latest/sphinx_epub/$RTD_PRJ_NAME.epub 
 
