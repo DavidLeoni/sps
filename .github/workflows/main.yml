@@ -12,7 +12,10 @@ jobs:
       with:
         rtd-prj-name: jupman
         git_url: https://github.com/DavidLeoni/jupman.git
-        requirements: requirements-build.txt    
+        git-tag: master
+        version: latest                        
+        requirements: requirements-build.txt
+        language: en
     - name: show workspace output
       run: tree -aC $GITHUB_WORKSPACE
     - name: Commit documentation changes
@@ -21,6 +24,7 @@ jobs:
         cp -r $GITHUB_WORKSPACE/html/* gh-pages/
         cp -r $GITHUB_WORKSPACE/epub/*.epub gh-pages/
         cp -r $GITHUB_WORKSPACE/latex/*.pdf gh-pages/
+        # note: html zip is already provided by Github
         cd gh-pages
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
