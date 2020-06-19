@@ -3,13 +3,15 @@ on: [push]
 jobs:
   build_docs_job:
     if: (github.ref == 'ref/head/master') || (github.ref == 'ref/head/dev')
-    runs-on: ubuntu-latest${{ env.web_path }}
+    runs-on: ubuntu-latest
     name: Build docs    
-    env:
-      git-tag: ${{ GITHUB_REF##*/ }}
-      version: ${{ GITHUB_REF##*/ }}
-      language: en
     steps:    
+    - name: sets environment 
+      run: |
+        # couldn't find more elegant ways
+        echo "::set-env name=git_tag::${GITHUB_REF##*/}"
+        echo "::set-env name=version::${GITHUB_REF##*/}"
+        echo "::set-env name=language::en"        
     - name: apply docs version renaming
       if: env.git-tag == 'master'
       run: echo "::set-env name=version::latest"
