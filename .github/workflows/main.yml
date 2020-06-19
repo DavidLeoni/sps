@@ -8,7 +8,7 @@ jobs:
     - name: Install tree
       run: sudo apt-get install tree
     - name: Build docs step      
-      uses: DavidLeoni/jupman@master
+      uses: DavidLeoni/readthedocs-to-actions@master
       with:
         rtd-prj-name: jupman
         git-url: https://github.com/DavidLeoni/jupman.git
@@ -26,8 +26,7 @@ jobs:
         cp -r $GITHUB_WORKSPACE/epub/*.epub gh-pages/en/latest
         cp -r $GITHUB_WORKSPACE/latex/*.pdf gh-pages/en/latest
         # note: html zip is already provided by Github
-        cd gh-pages
-        ln -s en/latest/ index.html
+        cd gh-pages        
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add .      
