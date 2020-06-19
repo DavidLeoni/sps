@@ -12,12 +12,13 @@ LANGUAGE=$6      # en
 
 RTD_PRJ_PATH=/home/docs/checkouts/readthedocs.org/user_builds/$RTD_PRJ_NAME
 
-echo "using   GIT_URL=$GIT_URL"
-echo "using   VERSION=$VERSION"
-echo "using   GIT_TAG=$GIT_TAG"
 echo "using   RTD_PRJ_NAME=$RTD_PRJ_NAME"
+echo "using   GIT_URL=$GIT_URL"
+echo "using   GIT_TAG=$GIT_TAG"
+echo "using   VERSION=$VERSION"
 echo "using   REQUIREMENTS=$REQUIREMENTS"
 echo "using   LANGUAGE=$LANGUAGE"
+echo
 echo "using   RTD_PRJ_PATH=$RTD_PRJ_PATH"
 
 # Reproduce build of ReadTheDocs --- START

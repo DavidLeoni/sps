@@ -8,7 +8,7 @@ inputs:
       NOTE: you don't need to actually have a project on readthedocs servers!    
     default: 'jupman'
     required: true
-  git_url:
+  git-url:
     description: 'Full git url to clone the repo'
     required: true
   git-tag:

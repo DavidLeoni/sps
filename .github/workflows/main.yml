@@ -11,7 +11,7 @@ jobs:
       uses: DavidLeoni/jupman@master
       with:
         rtd-prj-name: jupman
-        git_url: https://github.com/DavidLeoni/jupman.git
+        git-url: https://github.com/DavidLeoni/jupman.git
         git-tag: master
         version: latest                        
         requirements: requirements-build.txt
