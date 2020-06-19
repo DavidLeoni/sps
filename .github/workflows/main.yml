@@ -21,13 +21,13 @@ jobs:
     - name: Commit documentation changes
       run: |
         git clone https://github.com/DavidLeoni/jupman.git --branch gh-pages --single-branch gh-pages        
-        mkdir -p en/latest        
+        mkdir -p gh-pages/en/latest        
         cp -r $GITHUB_WORKSPACE/html/* gh-pages/en/latest
         cp -r $GITHUB_WORKSPACE/epub/*.epub gh-pages/en/latest
         cp -r $GITHUB_WORKSPACE/latex/*.pdf gh-pages/en/latest
         # note: html zip is already provided by Github
         cd gh-pages
-        ln -s en/latest index.html
+        ln -s en/latest/ index.html
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add .      
