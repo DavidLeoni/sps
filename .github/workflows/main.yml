@@ -2,7 +2,7 @@ on: [push]
 
 jobs:
   build_docs_job:
-    if: (github.ref == 'ref/head/master') || (github.ref == 'ref/head/dev')
+    if: (github.ref == 'refs/head/master') || (github.ref == 'refs/head/dev')
     runs-on: ubuntu-latest
     name: Build docs    
     steps:    
@@ -13,14 +13,14 @@ jobs:
         echo "::set-env name=version::${GITHUB_REF##*/}"
         echo "::set-env name=language::en"        
     - name: apply docs version renaming
-      if: env.git-tag == 'master'
+      if: env.git_tag == 'master'
       run: echo "::set-env name=version::latest"
     - name: Run Sphinx in RTD docker      
       uses: DavidLeoni/readthedocs-to-actions@master
       with:
-        rtd-prj-name: jupman        
-        git-url: https://github.com/${{ github.repository }}.git
-        git-tag: ${{ env.git-tag }}
+        rtd_prj_name: jupman        
+        git_url: https://github.com/${{ github.repository }}.git
+        git_tag: ${{ env.git_tag }}
         version: ${{ env.version }}
         requirements: requirements-build.txt
         language: ${{ env.language }}
