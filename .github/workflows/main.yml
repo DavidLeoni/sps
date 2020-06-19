@@ -7,14 +7,15 @@ jobs:
     name: Build docs    
     steps:    
     - name: sets environment 
-      run: |
-        # couldn't find more elegant ways
+      run: |        
         echo "::set-env name=git_tag::${GITHUB_REF##*/}"
         echo "::set-env name=version::${GITHUB_REF##*/}"
         echo "::set-env name=language::en"        
     - name: apply docs version renaming
       if: env.git_tag == 'master'
       run: echo "::set-env name=version::latest"
+    - name: sets web_path      
+      run: echo "::set-env name=web_path::${{env.language}}/${{env.version}}"
     - name: Run Sphinx in RTD docker      
       uses: DavidLeoni/readthedocs-to-actions@master
       with:
@@ -31,11 +32,11 @@ jobs:
     - name: Commit documentation changes
       run: |
         git clone https://github.com/${{ github.repository }}.git --branch gh-pages --single-branch gh-pages
-        WEB_PATH= ${{ env.language }}/${{ env.version }}
-        mkdir -p gh-pages/$WEB_PATH
-        cp -r $GITHUB_WORKSPACE/html/* gh-pages/$WEB_PATH
-        cp -r $GITHUB_WORKSPACE/epub/*.epub gh-pages/$WEB_PATH
-        cp -r $GITHUB_WORKSPACE/latex/*.pdf gh-pages/$WEB_PATH
+        
+        mkdir -p gh-pages/${{ env.web_path }}
+        cp -r $GITHUB_WORKSPACE/html/* gh-pages/${{ env.web_path }}
+        cp -r $GITHUB_WORKSPACE/epub/*.epub gh-pages/${{ env.web_path }}
+        cp -r $GITHUB_WORKSPACE/latex/*.pdf gh-pages/${{ env.web_path }}
         # note: html zip is already provided by Github
         cd gh-pages        
         git config --local user.email "action@github.com"
