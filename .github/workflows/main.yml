@@ -2,29 +2,38 @@ on: [push]
 
 jobs:
   build_docs_job:
-    runs-on: ubuntu-latest
-    name: Build docs
-    steps:      
-    - name: Install tree
-      run: sudo apt-get install tree
-    - name: Build docs step      
+    if: (github.ref == 'ref/head/master') || (github.ref == 'ref/head/dev')
+    runs-on: ubuntu-latest${{ env.web_path }}
+    name: Build docs    
+    env:
+      git-tag: ${{ GITHUB_REF##*/ }}
+      version: ${{ GITHUB_REF##*/ }}
+      language: en
+    steps:    
+    - name: apply docs version renaming
+      if: env.git-tag == 'master'
+      run: echo "::set-env name=version::latest"
+    - name: Run Sphinx in RTD docker      
       uses: DavidLeoni/readthedocs-to-actions@master
       with:
-        rtd-prj-name: jupman
-        git-url: https://github.com/DavidLeoni/jupman.git
-        git-tag: master
-        version: latest                        
+        rtd-prj-name: jupman        
+        git-url: https://github.com/${{ github.repository }}.git
+        git-tag: ${{ env.git-tag }}
+        version: ${{ env.version }}
         requirements: requirements-build.txt
-        language: en
-    - name: show workspace output
-      run: tree -aC $GITHUB_WORKSPACE
+        language: ${{ env.language }}
+    - name: Show workspace output
+      run: |
+        sudo apt-get install tree
+        tree -aC $GITHUB_WORKSPACE
     - name: Commit documentation changes
       run: |
-        git clone https://github.com/DavidLeoni/jupman.git --branch gh-pages --single-branch gh-pages        
-        mkdir -p gh-pages/en/latest        
-        cp -r $GITHUB_WORKSPACE/html/* gh-pages/en/latest
-        cp -r $GITHUB_WORKSPACE/epub/*.epub gh-pages/en/latest
-        cp -r $GITHUB_WORKSPACE/latex/*.pdf gh-pages/en/latest
+        git clone https://github.com/${{ github.repository }}.git --branch gh-pages --single-branch gh-pages
+        WEB_PATH= ${{ env.language }}/${{ env.version }}
+        mkdir -p gh-pages/$WEB_PATH
+        cp -r $GITHUB_WORKSPACE/html/* gh-pages/$WEB_PATH
+        cp -r $GITHUB_WORKSPACE/epub/*.epub gh-pages/$WEB_PATH
+        cp -r $GITHUB_WORKSPACE/latex/*.pdf gh-pages/$WEB_PATH
         # note: html zip is already provided by Github
         cd gh-pages        
         git config --local user.email "action@github.com"
