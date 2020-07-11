@@ -28,6 +28,8 @@ jobs:
         VERSION: ${{ env.VERSION }}
         REQUIREMENTS: requirements-build.txt
         LANGUAGE: ${{ env.LANGUAGE }}
+        RTD_SINGLE_HTML: false
+        RTD_HTML_EXT: false
     - name: Show workspace output
       run: |        
         tree -aC $GITHUB_WORKSPACE
