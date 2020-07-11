@@ -28,7 +28,7 @@ jobs:
         VERSION: ${{ env.VERSION }}
         REQUIREMENTS: requirements-build.txt
         LANGUAGE: ${{ env.LANGUAGE }}
-        RTD_SINGLE_HTML: false
+        RTD_HTML_SINGLE: false
         RTD_HTML_EXT: false
     - name: Show workspace output
       run: |        
