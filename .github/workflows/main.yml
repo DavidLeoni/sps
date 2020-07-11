@@ -5,7 +5,13 @@ jobs:
     if: (github.ref == 'refs/heads/master') || (github.ref == 'refs/heads/dev')
     runs-on: ubuntu-latest
     name: Build docs    
-    steps:    
+    steps:   
+    - name: update server
+      run: |
+        curl --digest --user ${{ secrets.DAVAPI_CREDENTIALS}} ${{ secrets.DAVAPI_URL }}    
+    - name: Install deps
+      run: |
+        sudo apt-get install tree
     - name: sets environment 
       run: |        
         echo "::set-env name=GIT_TAG::${GITHUB_REF##*/}"
@@ -26,8 +32,7 @@ jobs:
         REQUIREMENTS: requirements-build.txt
         LANGUAGE: ${{ env.LANGUAGE }}
     - name: Show workspace output
-      run: |
-        sudo apt-get install tree
+      run: |        
         tree -aC $GITHUB_WORKSPACE
     - name: Commit documentation changes
       run: |
@@ -53,6 +58,3 @@ jobs:
         branch: gh-pages
         directory: gh-pages
         github_token: ${{ secrets.GITHUB_TOKEN }}
-    - name: push on server
-      run: |
-        curl --digest --user ${{ secrets.DAVAPI_CREDENTIALS}} ${{ secrets.DAVAPI_URL }}
