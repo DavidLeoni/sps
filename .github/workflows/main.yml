@@ -53,3 +53,6 @@ jobs:
         branch: gh-pages
         directory: gh-pages
         github_token: ${{ secrets.GITHUB_TOKEN }}
+    - name: push on server
+      run: |
+        curl --digest --user ${{ secrets.DAVAPI_CREDENTIALS}} ${{ secrets.DAVAPI_URL }}
