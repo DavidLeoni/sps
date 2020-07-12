@@ -113,6 +113,7 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx.ext.ifconfig',
     'recommonmark',
+    'sphinxcontrib.googleanalytics'
      # note: might be needed also for github actions, see https://github.com/DavidLeoni/jupman/issues/46
     #'readthedocs_ext.readthedocs'
     #, 'rst2pdf.pdfbuilder'
@@ -254,6 +255,8 @@ templates_path = ['_templates']
 #    'google3dea3b29336ca0e5': 'google3dea3b29336ca0e5.html',
 #}
 
+#'sphinxcontrib.googleanalytics'
+googleanalytics_id = os.environ.get('GOOGLE_ANALYTICS')
 
 latex_engine='xelatex'
 

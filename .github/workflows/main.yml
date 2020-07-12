@@ -29,7 +29,8 @@ jobs:
         REQUIREMENTS: requirements-build.txt
         LANGUAGE: ${{ env.LANGUAGE }}
         RTD_HTML_SINGLE: false
-        RTD_HTML_EXT: false
+        RTD_HTML_EXT: false      
+        GOOGLE_ANALYTICS: ${{ secrets.GOOGLE_ANALYTICS }}
     - name: Show workspace output
       run: |        
         tree -aC $GITHUB_WORKSPACE
