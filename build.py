@@ -15,8 +15,6 @@ import glob
 import fileinput
 import string
 from pathlib import Path
-import sarge
-from sarge import capture_stdout
 
 import conf
 
@@ -84,15 +82,12 @@ def run(cmd, cwd=None):
     print("")
     print("  " + cmd)
     print("")
-    p = capture_stdout(cmd, env=my_env, cwd=cwd)
-    for line in p.stdout: 
-        print(repr(line))
-    #res = subprocess.check_output(cmd,
-    #                               shell=True,
-    #                               env=my_env,
-    #                               cwd=cwd
-    #                              )
-    #print(res.decode('UTF-8'))
+    res = subprocess.check_output(cmd,
+                                   shell=True,
+                                   env=my_env,
+                                   cwd=cwd
+                                  )
+    print(res.decode('UTF-8'))
     return res
     
 def run_sphinx(manuals, formats):
@@ -117,7 +112,7 @@ def run_sphinx(manuals, formats):
             # sphinx-build -b  html doc _build/student/html 
 
             try:
-                cmd = (sphinxcmd + " -j 4 -b " + fmt + " . " + relout + " " + tinfo['args'] )
+                cmd = (sphinxcmd + " -T -j 4 -b " + fmt + " . " + relout + " " + tinfo['args'] )
                 res = run(cmd)
                     
 
