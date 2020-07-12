@@ -19,11 +19,13 @@ on_rtd = os.environ.get('READTHEDOCS') == 'True'
 
 jm = jmt.Jupman()
 
-jm.subtitle = "TODO CHANGE jm.subtitle A template manager for Jupyter course websites."""
-jm.course = "TODO CHANGE jm.course" 
-jm.degree = "TODO CHANGE jm.degree"
-author = 'TODO CHANGE author' 
-copyright = '# TODO FIRST YEAR - %s, %s' % (datetime.datetime.now().year, author)
+# TODO CHANGE
+jm.subtitle = "A template manager for online books made with Jupyter notebooks and NBSphinx doc generator""" 
+jm.course = "Applied Pythonics" # TODO CHANGE
+jm.degree = "Nuclear Templates Engineering" # TODO CHANGE
+author = 'People That Write a Lot' # TODO CHANGE
+# TODO FIRST YEAR
+copyright = '# 2020 - %s, %s' % (datetime.datetime.now().year, author)
 
 #####    'jm_filename' IS *VERY* IMPORTANT !!!!
 #####     IT IS PREPENDED IN MANY GENERATED FILES
@@ -110,8 +112,8 @@ extensions = [
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
     'sphinx.ext.ifconfig',
-    'recommonmark',    
-     # note: also needed for github actions, see https://github.com/DavidLeoni/jupman/issues/46
+    'recommonmark',
+     # note: might be needed also for github actions, see https://github.com/DavidLeoni/jupman/issues/46
     #'readthedocs_ext.readthedocs'
     #, 'rst2pdf.pdfbuilder'
 ]
@@ -126,6 +128,7 @@ exclude_patterns = [jm.build,
                      'readme.md']
 
 exclude_patterns.extend(jm.zip_ignored)
+
 
 # Default language for syntax highlighting in reST and Markdown cells
 highlight_language = 'none'
@@ -187,7 +190,7 @@ language = None
 html_title = project # + ' version ' + release
 # canonical url for documentation
 # since sphinx 1.8
-html_baseurl = 'https://jupman.softpython.org'
+html_baseurl = 'https://jupman.softpython.org/en/latest/'
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
@@ -250,8 +253,6 @@ templates_path = ['_templates']
 #html_additional_pages = {
 #    'google3dea3b29336ca0e5': 'google3dea3b29336ca0e5.html',
 #}
-
-
 
 
 latex_engine='xelatex'
