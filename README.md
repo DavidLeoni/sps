@@ -3,6 +3,16 @@
 
 A template manager for websites generated from Jupyter notebooks.
 
-See manual at [jupman.readthedocs.io](http://jupman.readthedocs.io)
+Jupman uses [NbSphinx](http://nbsphinx.readthedocs.io/) and builds with [ReadTheDocs](https://readthedocs.org), local docker or Github Actions
 
-Jupman uses [NbSphinx](http://nbsphinx.readthedocs.io/) and [ReadTheDocs](https://readthedocs.org). 
+Official manual website is at [jupman.softpython.org](https://jupman.softpython.org)
+
+Replica for testing ReadTheDocs:
+
+* https://jupman.readthedocs.io
+
+Replicas for testing Github Action build, hosted on Github Pages:
+
+* https://DavidLeoni.github.io/jupman/en/latest
+* https://DavidLeoni.github.io/jupman/en/themed
+

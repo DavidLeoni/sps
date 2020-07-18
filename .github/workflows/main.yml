@@ -2,7 +2,7 @@ on: [push]
 
 jobs:
   build_docs_job:
-    if: (github.ref == 'refs/heads/master') || (github.ref == 'refs/heads/dev')
+    if: (github.ref == 'refs/heads/master') || (github.ref == 'refs/heads/dev') || (github.ref == 'refs/heads/themed')
     runs-on: ubuntu-latest
     name: Build docs    
     steps:   
