@@ -62,7 +62,7 @@ jobs:
         # The above command will fail if no changes were present, so we ignore
         # the return code.
     - name: Push changes
-      uses: ad-m/github-push-action@master
+      uses: ad-m/github-push-action@0.6.0
       with:
         branch: gh-pages
         directory: gh-pages
