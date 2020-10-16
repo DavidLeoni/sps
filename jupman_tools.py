@@ -347,11 +347,11 @@ class JupmanPreprocessor(Preprocessor):
         
         """Careful path *includes* part of docname:
         {
-            'metadata': {'path': '/home/da/Da/prj/jupman/prj/jupyter-intro'},
-                'nbsphinx_docname': 'jupyter-intro/jupyter-intro-sol',
-                'nbsphinx_save_notebook': '/home/da/Da/prj/jupman/prj/_build/html/.doctrees/nbsphinx/jupyter-intro/jupyter-intro-sol.ipynb',
+            'metadata': {'path': '/home/da/Da/prj/jupman/prj/jupyter-example'},
+                'nbsphinx_docname': 'jupyter-example/jupyter-example-sol',
+                'nbsphinx_save_notebook': '/home/da/Da/prj/jupman/prj/_build/html/.doctrees/nbsphinx/jupyter-example/jupyter-example-sol.ipynb',
                 'output_files_dir': '../_build/html/.doctrees/nbsphinx',
-                'unique_key': 'jupyter-intro_jupyter-intro-sol'
+                'unique_key': 'jupyter-example_jupyter-example-sol'
         }
         """
         rel_dir, partial_fn = os.path.split(resources['nbsphinx_docname'])                
