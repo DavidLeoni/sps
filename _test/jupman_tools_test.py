@@ -190,9 +190,9 @@ def test_setup(tconf):
     mockapp = MockSphinx()
     
     tconf.setup(mockapp)
-    assert os.path.isfile(os.path.join(tconf.jm.generated, 'jupyter-intro.zip'))
-    assert os.path.isfile(os.path.join(tconf.jm.generated, 'python-intro.zip'))
-    assert os.path.isfile(os.path.join(tconf.jm.generated, 'tools-intro.zip'))
+    assert os.path.isfile(os.path.join(tconf.jm.generated, 'jupyter-example.zip'))
+    assert os.path.isfile(os.path.join(tconf.jm.generated, 'python-example.zip'))
+    assert os.path.isfile(os.path.join(tconf.jm.generated, 'jup-and-py-example.zip'))
 
 def test_ignore_spaces():
     
