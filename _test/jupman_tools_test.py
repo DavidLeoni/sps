@@ -4,8 +4,7 @@ import sys
 sys.path.append('../')
 sys.path.append('.')  # good lord, without this debugging in VSCode doesn't work
 import jupman_tools as jmt
-from jupman_tools import ignore_spaces
-from jupman_tools import Jupman
+from jupman_tools import ignore_spaces, tag_regex, Jupman
 import pytest 
 import re
 from sphinx.application import Sphinx
@@ -180,6 +179,8 @@ def test_copy_chapter():
     assert os.path.isfile(nb_ex_fn)
 
     nb_ex = nbformat.read(nb_ex_fn, nbformat.NO_CONVERT)
+    from pprint import pprint
+    pprint(nb_ex)
     assert "# Notebook EXERCISES" in nb_ex.cells[0].source
     assert "#before\nraise" in nb_ex.cells[1].source
     assert nb_ex.cells[2].source == ""   # SOLUTION strips everything
@@ -187,23 +188,29 @@ def test_copy_chapter():
     #4 question
     #5 answer: must begin with answer and strips everything after
     assert nb_ex.cells[5].source == '**ANSWER**:\n'
+    #6 write here 
+    assert nb_ex.cells[6].source == 'x = 6\n# write here fast please\n\n'
+    assert nb_ex.cells[7].source == '' # SOLUTION strips everything
 
 def test_setup(tconf):
-    
-    
+        
     mockapp = MockSphinx()
     
     tconf.setup(mockapp)
-    assert os.path.isfile(os.path.join(tconf.jm.generated, 'jupyter-example.zip'))
-    assert os.path.isfile(os.path.join(tconf.jm.generated, 'python-example.zip'))
-    assert os.path.isfile(os.path.join(tconf.jm.generated, 'jup-and-py-example.zip'))
+    # if so tests run smoothly also on non-jupman projects
+    if os.path.exists('jupyter-example'):
+        assert os.path.isfile(os.path.join(tconf.jm.generated, 'jupyter-example.zip'))
+    if os.path.exists('python-example'):
+        assert os.path.isfile(os.path.join(tconf.jm.generated, 'python-example.zip'))
+    if os.path.exists('jup-and-py-example'):
+        assert os.path.isfile(os.path.join(tconf.jm.generated, 'jup-and-py-example.zip'))
 
-def test_ignore_spaces():
+def test_tag_regex():
     
     with pytest.raises(ValueError):
-        ignore_spaces("")
+        tag_regex("")
 
-    p = re.compile(ignore_spaces(" a    b"))
+    p = re.compile(tag_regex(" a    b"))
     assert p.match(" a b")
     assert p.match(" a  b")
     assert p.match(" a  b ")
@@ -212,7 +219,13 @@ def test_ignore_spaces():
     assert p.match("   a  b\n")
     assert not p.match(" ab")
     assert not p.match("c b")
-    
+
+def test_write_solution_here():
+    jm = make_jm()
+    p = re.compile(jm.write_solution_here)
+    print(p)
+    assert p.match(" # write here a b\nc")
+    assert p.match(" # write here a   b c \nc\n1d")
 
 
 def test_validate_code_tags():

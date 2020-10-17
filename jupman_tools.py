@@ -284,20 +284,38 @@ def tag_start(tag):
 def tag_end(tag):
     return '#/' + tag
 
-def ignore_spaces(string, must_begin=True):
+def tag_regex(string, must_begin=True, preserve_line=False):
     """ Takes a non-regex string and return a regex string which ignores extra
         spaces in s and newline after 
 
         must_begin : if True, provided string must be at the beginning of code / cell
+        preserve_line : if True, characters following the tag until the end of the line are ignored
+
+        @since 3.2
     """
     if len(string) == 0:
-        raise ValueError("Expect a non-empty string !")
+            raise ValueError("Expect a non-empty string !")
     # so we do not get spaces escaped, which I find horrible default behaviour: 
     # https://stackoverflow.com/questions/32419837/why-re-escape-escapes-space
     escaped = [re.escape(x) for x in string.split()] 
     removed_spaces = r'\s+'.join(escaped)
     begin_char= r'^' if must_begin else ''
-    return r"(?s)(%s\s*%s)(.*)" % (begin_char, removed_spaces)
+    if preserve_line:
+        preservel = r'(.*?)\n'
+    else:
+        preservel = r'()'
+    return r"(?s)(%s\s*%s)%s(.*)" % (begin_char, removed_spaces, preservel)
+
+def ignore_spaces(string, must_begin=True):
+    """ Takes a non-regex string and return a regex string which ignores extra
+        spaces in s and newline after 
+
+        must_begin : if True, provided string must be at the beginning of code / cell
+        
+        @deprecated: use tag_regex instead
+    """
+    warn("DEPRECATED: jupman_tools.ignore_spaces is deprecated, use tag_regex instead")
+    return tag_regex(string, must_begin)
 
 def multi_replace(text, d):
     """ Takes a dictionary pattern -> substitution and applies all substitutions to text
@@ -455,18 +473,18 @@ class Jupman:
         self.ipynb_exercises = "EXERCISES"
         """ words used in ipynb files - you might want to translate these in your language. Use plurals."""        
 
-        self.write_solution_here = ignore_spaces("# write here", must_begin=False)
-        """ the string is not just a translation, it's also a command that   when 
+        self.write_solution_here = tag_regex("# write here", must_begin=False, preserve_line=True)
+        """ the string is not just a translation, it's also a command that when 
         building the exercises removes the content after it in the code cell it is 
         contained in. """
 
-        self.solution = ignore_spaces("# SOLUTION")
+        self.solution = tag_regex("# SOLUTION")
         """ #NOTE: the string is not just a translation, it's also a command
             that  when building the exercises completely removes the content of the cell 
             it is contained in (solution comment included)."""
 
 
-        self.markdown_answer = ignore_spaces('**ANSWER**:')
+        self.markdown_answer = tag_regex('**ANSWER**:')
         """NOTE: the string is not just a translation, it's also a command 
                  that  when building the exercises removes the content after it in
                  the markdown cell it is contained in.
@@ -557,7 +575,7 @@ class Jupman:
                         self.raise_exc_code, 
                         solution_text)                    
         ret = re.sub(self.strip_pattern(), '', ret)
-        ret = re.sub(self.write_solution_here, r'\1\n\n', ret)
+        ret = re.sub(self.write_solution_here, r'\1\2\n\n', ret)
         if filepath:
             ret = replace_py_rel(ret, filepath)
         return ret            
