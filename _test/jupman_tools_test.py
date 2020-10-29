@@ -225,8 +225,10 @@ def test_write_solution_here():
     p = re.compile(jm.write_solution_here)
     print(p)
     assert p.match(" # write here a b\nc")
-    assert p.match(" # write here a   b c \nc\n1d")
-
+    assert p.match(" # write here a   b c \nc\n1d")    
+    assert p.match('#  write  here\n')
+    #assert p.match('# write here')  # corner case, there is no \n    
+    #assert p.match('# write here   ')  # corner case, there is no \n    
 
 def test_validate_code_tags():
     jm = make_jm()
