@@ -1,4 +1,5 @@
 from hypothesis import given
+from pprint import pprint
 from hypothesis.strategies import text
 import sys
 sys.path.append('../')
@@ -164,6 +165,10 @@ def test_copy_chapter():
         sol_code = sol_f.read()
         assert '# Python\nimport jupman' in sol_code
         assert '#jupman-raise' not in sol_code
+        assert '#jupman-strip' not in sol_code
+        assert '#jupman-purge' not in sol_code
+        assert 'stripped!' in sol_code
+        assert 'purged!' not in sol_code        
         assert "# work!\n\nprint('hi')" in sol_code
 
     ex_fn = os.path.join(dest_dir, 'some.py')
@@ -179,7 +184,7 @@ def test_copy_chapter():
     assert os.path.isfile(nb_ex_fn)
 
     nb_ex = nbformat.read(nb_ex_fn, nbformat.NO_CONVERT)
-    from pprint import pprint
+    
     pprint(nb_ex)
     assert "# Notebook EXERCISES" in nb_ex.cells[0].source
     assert "#before\nraise" in nb_ex.cells[1].source
@@ -191,6 +196,16 @@ def test_copy_chapter():
     #6 write here 
     assert nb_ex.cells[6].source == 'x = 6\n# write here fast please\n\n'
     assert nb_ex.cells[7].source == '' # SOLUTION strips everything
+    assert nb_ex.cells[8].source == 'x = 8\n\n# after'  # jupman-strip  strips everything inside exercises
+    assert nb_ex.cells[9].source == 'x = 9\n\n# after'  # jupman-purge everything inside exercises 
+
+    nb_sol_fn = os.path.join(dest_dir, 'nb-sol.ipynb')
+    nb_sol = nbformat.read(nb_sol_fn, nbformat.NO_CONVERT) 
+    assert 'stripped!' in nb_sol.cells[8].source   # jupman-strip  strips everything inside exercises
+    assert '#jupman-strip' not in nb_sol.cells[8].source   
+    assert 'purged!' not in  nb_sol.cells[9].source  # jupman-purge  strips everything also in solutions    
+    assert '#jupman-purge' not in nb_sol.cells[9].source   
+
 
 def test_setup(tconf):
         
@@ -235,6 +250,8 @@ def test_validate_code_tags():
     assert jm.validate_code_tags('# SOLUTION\nbla', 'some_file') == 1
     assert jm.validate_code_tags('  # SOLUTION\nbla', 'some_file') == 1
     assert jm.validate_code_tags('something before  # SOLUTION\nbla', 'some_file') == 0
+    assert jm.validate_code_tags('#jupman-strip\nblabla#/jupman-strip', 'some_file') == 1
+    assert jm.validate_code_tags('#jupman-purge\nblabla#/jupman-purge', 'some_file') == 1
     # pairs count as one
     assert jm.validate_code_tags('#jupman-raise\nsomething#/jupman-raise', 'some_file') == 1
     assert jm.validate_code_tags("""
