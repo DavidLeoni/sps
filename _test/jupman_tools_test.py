@@ -161,8 +161,8 @@ def test_copy_chapter():
     sol_fn = os.path.join(dest_dir, 'some_sol.py')
     assert os.path.isfile(sol_fn)
 
-    with open(sol_fn, encoding='utf-8') as sol_f:
-        sol_code = sol_f.read()
+    with open(sol_fn, encoding='utf-8') as py_sol_f:
+        sol_code = py_sol_f.read()
         assert '# Python\nimport jupman' in sol_code
         assert '#jupman-raise' not in sol_code
         assert '#jupman-strip' not in sol_code
@@ -174,11 +174,11 @@ def test_copy_chapter():
     ex_fn = os.path.join(dest_dir, 'some.py')
     assert os.path.isfile(ex_fn)
 
-    with open(ex_fn, encoding='utf-8') as ex_f:
-        ex_code = ex_f.read()
-        assert '# Python\nimport jupman' in ex_code
-        assert '#jupman-raise' not in ex_code
-        assert '# work!\nraise' in ex_code
+    with open(ex_fn, encoding='utf-8') as py_ex_f:
+        py_ex_code = py_ex_f.read()
+        assert '# Python\nimport jupman' in py_ex_code
+        assert '#jupman-raise' not in py_ex_code
+        assert '# work!\nraise' in py_ex_code
 
     nb_ex_fn = os.path.join(dest_dir, 'nb.ipynb')
     assert os.path.isfile(nb_ex_fn)
@@ -207,6 +207,28 @@ def test_copy_chapter():
     assert '#jupman-purge' not in nb_sol.cells[9].source   
 
 
+    py_chal_sol_fn = os.path.join(dest_dir, 'my_chal_sol.py')    
+    assert not os.path.isfile(py_chal_sol_fn)
+    py_chal_fn = os.path.join(dest_dir, 'my_chal.py')
+    assert os.path.isfile(py_chal_fn)
+
+    py_chal_test_fn = os.path.join(dest_dir, 'my_chal_test.py')
+    assert os.path.isfile(py_chal_test_fn)
+    with open(py_chal_test_fn) as py_chal_test_f: 
+        py_chal_test_code = py_chal_test_f.read()
+        assert 'from my_chal import *' in py_chal_test_code
+
+    nb_chal_ex_fn = os.path.join(dest_dir, 'nb-chal.ipynb')    
+    assert os.path.isfile(nb_chal_ex_fn)
+    nb_chal_sol_fn = os.path.join(dest_dir, 'nb-chal-sol.ipynb')
+    assert not os.path.isfile(nb_chal_sol_fn)
+
+    nb_chal_ex = nbformat.read(nb_chal_ex_fn, nbformat.NO_CONVERT)
+
+    assert jm.ipynb_solutions not in nb_chal_ex.cells[1].source
+    
+
+
 def test_setup(tconf):
         
     mockapp = MockSphinx()
@@ -219,6 +241,8 @@ def test_setup(tconf):
         assert os.path.isfile(os.path.join(tconf.jm.generated, 'python-example.zip'))
     if os.path.exists('jup-and-py-example'):
         assert os.path.isfile(os.path.join(tconf.jm.generated, 'jup-and-py-example.zip'))
+    if os.path.exists('challenge-example'):
+        assert os.path.isfile(os.path.join(tconf.jm.generated, 'challenge-example.zip'))
 
 def test_tag_regex():
     
