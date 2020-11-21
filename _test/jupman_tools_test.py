@@ -100,6 +100,35 @@ def test_is_zip_ignored():
     assert not jm.is_zip_ignored('very/good')
     
 
+def test_is_code_sol_to_strip():
+    jm = make_jm()
+    solution = '# SOLUTION\nx=5\n'
+    write_here = '# write here\nx=5\n'
+    jupman_raise = '#jupman-raise\nx=5\n#/jupman-raise\n'
+    jupman_strip = '#jupman-strip\nx=5\n#/jupman-strip\n'
+    jupman_purge = '#jupman-purge\nx=5\n#/jupman-purge\n'
+
+    assert jm.is_to_strip(solution) == True
+    assert jm.is_to_strip(write_here) == True
+    assert jm.is_to_strip(jupman_raise) == True
+    assert jm.is_to_strip(jupman_strip) == True
+    assert jm.is_to_strip(jupman_purge) == True
+
+    assert jm.is_code_sol(solution) == True
+    assert jm.is_code_sol(write_here) == True    
+    assert jm.is_code_sol(jupman_raise) == True
+    assert jm.is_code_sol(jupman_strip) == True
+    assert jm.is_code_sol(jupman_purge) == False
+    
+    cx = """x = 9
+#jupman-purge
+# present neither in solution nor in exercises
+# NOTE: this is NOT considered a solution
+y = 'purged!'
+#/jupman-purge
+# after"""
+    assert jm.is_to_strip(cx) == True
+    assert jm.is_code_sol(cx) == False
 
 def test_copy_chapter():
     clean()
@@ -180,12 +209,13 @@ def test_copy_chapter():
         assert '#jupman-raise' not in py_ex_code
         assert '# work!\nraise' in py_ex_code
 
+    # nb_ex ----------------------------
     nb_ex_fn = os.path.join(dest_dir, 'nb.ipynb')
     assert os.path.isfile(nb_ex_fn)
 
     nb_ex = nbformat.read(nb_ex_fn, nbformat.NO_CONVERT)
     
-    pprint(nb_ex)
+    #pprint(nb_ex)
     assert "# Notebook EXERCISES" in nb_ex.cells[0].source
     assert "#before\nraise" in nb_ex.cells[1].source
     assert nb_ex.cells[2].source == ""   # SOLUTION strips everything
@@ -198,15 +228,43 @@ def test_copy_chapter():
     assert nb_ex.cells[7].source == '' # SOLUTION strips everything
     assert nb_ex.cells[8].source == 'x = 8\n\n# after'  # jupman-strip  strips everything inside exercises
     assert nb_ex.cells[9].source == 'x = 9\n\n# after'  # jupman-purge everything inside exercises 
+    assert '#jupman-strip' not in nb_ex.cells[10].source   
+    assert '#jupman-purge' not in nb_ex.cells[10].source   
 
+    # nb_sol --------------------
     nb_sol_fn = os.path.join(dest_dir, 'nb-sol.ipynb')
     nb_sol = nbformat.read(nb_sol_fn, nbformat.NO_CONVERT) 
     assert 'stripped!' in nb_sol.cells[8].source   # jupman-strip  strips everything inside exercises
     assert '#jupman-strip' not in nb_sol.cells[8].source   
     assert 'purged!' not in  nb_sol.cells[9].source  # jupman-purge  strips everything also in solutions    
-    assert '#jupman-purge' not in nb_sol.cells[9].source   
+    assert '#jupman-purge' not in nb_sol.cells[9].source           
+    
+    assert '#jupman-strip' not in nb_sol.cells[10].source   
+    assert '#jupman-purge' not in nb_sol.cells[10].source       
+    assert 'stripped!' in nb_sol.cells[10].source
+    assert not 'purged!' in nb_sol.cells[10].source
 
+    # nb_sol_web --------------------
+    nb_sol_fn = os.path.join(dest_dir, 'nb-sol.ipynb')
+    nb_sol_web = nbformat.read(nb_sol_fn, nbformat.NO_CONVERT)
 
+    jm._sol_nb_to_ex(nb_sol_web,
+                     os.path.abspath(nb_sol_fn),
+                     website=True)
+    
+    stripped8 = 0
+    stripped10 = 0
+    for cell in nb_sol_web.cells:
+        if 'stripped!8' in cell.source:
+            stripped8 += 1
+        if 'stripped!10' in cell.source:
+            stripped10 += 1    
+        assert not 'purged!9' in cell.source
+        assert not 'purged!10' in cell.source
+    assert stripped8 == 1
+    assert stripped10 == 1
+
+    # chal --------------------
     py_chal_sol_fn = os.path.join(dest_dir, 'my_chal_sol.py')    
     assert not os.path.isfile(py_chal_sol_fn)
     py_chal_fn = os.path.join(dest_dir, 'my_chal.py')
@@ -262,7 +320,7 @@ def test_tag_regex():
 def test_write_solution_here():
     jm = make_jm()
     p = re.compile(jm.write_solution_here)
-    print(p)
+    #print(p)
     assert p.match(" # write here a b\nc")
     assert p.match(" # write here a   b c \nc\n1d")    
     assert p.match('#  write  here\n')
