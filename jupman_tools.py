@@ -7,6 +7,7 @@ import shutil
 import inspect
 import types
 import glob
+import stat
 import datetime 
 from nbconvert.preprocessors import Preprocessor  
 import logging
@@ -1057,7 +1058,7 @@ class Jupman:
             rel_paths MUST be relative to project root
             
             This function was needed as default python zipping machinery created weird zips 
-            people couldn't open in Windows
+            people couldn't open in Windows AND it is not deterministic https://github.com/DavidLeoni/jupman/issues/60
             
             - patterns is a list of tuples source regexes to dest               
             - remap is a function that takes a string and returns a string, and is applied after patterns
@@ -1105,18 +1106,31 @@ class Jupman:
                         to_name = the_remap(fname)
 
                 #info('to_name = %s' % to_name)                    
-                    
-                archive.write(fname, to_name, zipfile.ZIP_DEFLATED)
+                
+                permission = 0o755 if os.access(fname, os.X_OK) else 0o644
+                zip_info = zipfile.ZipInfo.from_file(fname, to_name)
+                zip_info.date_time = (2020, 1, 1, 0, 0, 0)
+                zip_info.external_attr = (stat.S_IFREG | permission) << 16
+                with open(fname, "rb") as fp:
+                    archive.writestr(
+                        zip_info,
+                        fp.read(),
+                        compress_type=zipfile.ZIP_DEFLATED,
+                        #compresslevel=9, # python 3.7+
+                    )                
+                
 
         archive = zipfile.ZipFile(zip_path + '.zip', "w")
+                
         
-        for rel_path in rel_paths:
+        
+        for rel_path in sorted(rel_paths):
 
             if os.path.isdir(rel_path):            
-                for dirname, dirs, files in os.walk(rel_path):                    
+                for dirname, dirs, files in sorted(os.walk(rel_path), key=lambda t: t[0]):
                     dirNamePrefix = dirname + "/*"                
                     filenames = glob.glob(dirNamePrefix)                    
-                    for fname in filenames:
+                    for fname in sorted(filenames):
                         if os.path.isfile(fname):
                             write_file(fname)
             elif os.path.isfile(rel_path):

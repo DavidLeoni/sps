@@ -11,6 +11,9 @@ import re
 from sphinx.application import Sphinx
 import os
 import nbformat
+import time
+import filecmp
+import shutil
 
 from common_test import * 
 import datetime
@@ -294,13 +297,41 @@ def test_setup(tconf):
     tconf.setup(mockapp)
     # if so tests run smoothly also on non-jupman projects
     if os.path.exists('jupyter-example'):
-        assert os.path.isfile(os.path.join(tconf.jm.generated, 'jupyter-example.zip'))
+        assert os.path.isfile(os.path.join(tconf.jm.generated, 'jupyter-example.zip'))        
     if os.path.exists('python-example'):
         assert os.path.isfile(os.path.join(tconf.jm.generated, 'python-example.zip'))
     if os.path.exists('jup-and-py-example'):
         assert os.path.isfile(os.path.join(tconf.jm.generated, 'jup-and-py-example.zip'))
     if os.path.exists('challenge-example'):
         assert os.path.isfile(os.path.join(tconf.jm.generated, 'challenge-example.zip'))
+
+    # test reproducible build zips
+    # https://github.com/DavidLeoni/jupman/issues/60
+        
+    if os.path.exists('jup-and-py-example'):
+            
+        zpath1 = os.path.join(tconf.jm.generated, 'jup-and-py-example.zip')     
+        
+                        
+        zpath2 = os.path.join(tconf.test_tmp, 'jup-and-py-example.zip')
+        
+        
+        shutil.copyfile(zpath1, zpath2)        
+        time.sleep(2)
+        tconf.setup(mockapp)
+                    
+        assert filecmp.cmp(zpath1, zpath2, shallow=False)
+                
+
+def TODO_test_reproducible_build_html():
+    
+    """ NOTE: 2020 12: if img alt is not specified, a random id is assigned which makes build non-deterministic
+    """    
+    hpath1 = os.path.join(tconf.jm.build, 'html/jupman-tests.html')
+    hpath2 = os.path.join(tconf.test_tmp, 'html/jupman-tests.html')
+    shutil.copyfile(hpath1, hpath2)
+    time.sleep(2)
+    assert filecmp.cmp(zpath1, zpath2, shallow=False)
 
 def test_tag_regex():
     

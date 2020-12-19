@@ -14,8 +14,12 @@ import nbformat
 def clean():
     if os.path.isdir('_build/test'):
         jmt.delete_tree('_build/test', '_build/test')
+        
     if os.path.isdir('_build/test-generated'):
         jmt.delete_tree('_build/test-generated', '_build/test-generated')
+
+    if os.path.isdir('_build/test-tmp'):
+        jmt.delete_tree('_build/test-tmp', '_build/test-tmp')
 
 def prep_jm(jm : Jupman):
     jm.build = '_build/test'
@@ -33,5 +37,9 @@ def tconf():
     import conf
 
     prep_jm(conf.jm)
+    
+    conf.test_tmp = os.path.join('_build', 'test-tmp')
+    os.makedirs(conf.test_tmp )
+    
     return conf
 
