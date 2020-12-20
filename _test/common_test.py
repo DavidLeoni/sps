@@ -43,3 +43,19 @@ def tconf():
     
     return conf
 
+def make_nb_resources(path):
+        
+    path = path.rstrip('.ipynb')
+        
+    dirname = os.path.dirname(path)
+    basename = os.path.basename(path)
+    
+    return {   
+        'metadata': {
+                        'path': dirname, # '/home/da/Da/prj/jupman/prj/jupyter-example'
+                    },
+        'nbsphinx_docname': path,
+        'nbsphinx_save_notebook': '_build/test/.doctrees/nbsphinx/' + basename +  '.ipynb',
+        'output_files_dir': '../_build/test/html/.doctrees/nbsphinx',
+        'unique_key': path.replace('/', '_')
+    }

@@ -12,10 +12,24 @@ import datetime
 from nbconvert.preprocessors import Preprocessor  
 import logging
 
+
+class JupmanFormatter(logging.Formatter):
+
+    def format(self, record):
+        if record.levelno == logging.INFO:
+            self._style._fmt = "  %(message)s"
+        else:
+            self._style._fmt = "\n\n  %(levelname)s: %(message)s"
+        return super().format(record)
+
+
 logger = logging.getLogger('jupman')
 console_handler = logging.StreamHandler()
 console_handler.setLevel(logging.DEBUG)
+console_handler.setFormatter(JupmanFormatter())
 logger.addHandler(console_handler)
+
+
 
 
 def fatal(msg, ex=None):
@@ -43,7 +57,7 @@ def error(msg, ex=None):
 def info(msg=""):
     logger.info("  %s" % msg)    
 
-def warn(msg):
+def warn(msg, ex=None):
     logger.warning("\n\n   WARNING: %s" % msg)    
 
 def debug(msg=""):
@@ -112,18 +126,6 @@ def expand_JM(source, target, exam_date, conf):
     destf = open(target, 'w')    
     destf.write(s)
 
-def _cancel_tags(text, tags):
-    """ Removes Jupman tags from solution WITHOUT stripping content within tags!!
-        
-        WARNING: in other words, this function IS *NOT* SUFFICIENT 
-                 to clean exercises from solutions !!!
-    """
-    ret = text
-    for tag in tags:
-        ret = ret \
-              .replace(tag_start(tag), '') \
-              .replace(tag_end(tag), '')    
-    return ret
 
 def _replace_title( nb_node, source_abs_fn, replacement, title_pat=r'(.*)') -> str:
         """ Finds the title of a notebook and replaces it with replacement
@@ -361,7 +363,7 @@ def init(jupman, conf={}):
     # Method as in https://github.com/spatialaudio/nbsphinx/issues/305#issuecomment-506748814
 
     def _from_notebook_node(self, nb, resources, **kwargs):
-        info('patched nbsphinx from_notebook_node')
+        debug('patched nbsphinx from_notebook_node')
                                 
         for f in jupman.preprocessors:
             nb, resources = f.preprocess(nb, resources=resources)
@@ -371,6 +373,7 @@ def init(jupman, conf={}):
     import nbsphinx
     nbsphinx_from_notebook_node = nbsphinx.Exporter.from_notebook_node                
 
+    
     nbsphinx.Exporter.from_notebook_node = _from_notebook_node
 
 
@@ -385,20 +388,34 @@ class JupmanPreprocessor(Preprocessor):
     def preprocess(self, nb, resources):
         """ @since 3.2 """
 
-        info("JupmanPreprocesser running...")
+        
         
         """Careful path *includes* part of docname:
-        {
-            'metadata': {'path': '/home/da/Da/prj/jupman/prj/jupyter-example'},
-                'nbsphinx_docname': 'jupyter-example/jupyter-example-sol',
-                'nbsphinx_save_notebook': '/home/da/Da/prj/jupman/prj/_build/html/.doctrees/nbsphinx/jupyter-example/jupyter-example-sol.ipynb',
-                'output_files_dir': '../_build/html/.doctrees/nbsphinx',
-                'unique_key': 'jupyter-example_jupyter-example-sol'
+        resources:
+        {   
+            'metadata': {
+                            'path': '/home/da/Da/prj/jupman/prj/jupyter-example'
+                        },
+            'nbsphinx_docname': 'jupyter-example/jupyter-example-sol',
+            'nbsphinx_save_notebook': '/home/da/Da/prj/jupman/prj/_build/html/.doctrees/nbsphinx/jupyter-example/jupyter-example-sol.ipynb',
+            'output_files_dir': '../_build/html/.doctrees/nbsphinx',
+            'unique_key': 'jupyter-example_jupyter-example-sol'
         }
         """
         rel_dir, partial_fn = os.path.split(resources['nbsphinx_docname'])                
-        source_abs_fn = os.path.join(resources['metadata']['path'], partial_fn + '.ipynb')                
-        return self.jupman._sol_nb_to_ex(nb, source_abs_fn,website=True), resources
+        source_abs_fn = os.path.join(resources['metadata']['path'], partial_fn + '.ipynb')     
+
+        if self.jupman._is_to_preprocess(nb, source_abs_fn):
+            relpath = os.path.relpath(source_abs_fn, os.path.abspath(os.getcwd()))
+            info("JupmanPreprocessor: webifying %s" % relpath )
+            try:
+                self.jupman.validate_tags(source_abs_fn)
+            except Exception as ex:
+                logger.warning("Failed Jupman tags validation! %s", ex)
+                
+            return self.jupman._sol_nb_to_ex(nb, source_abs_fn,website=True), resources
+        else:
+            return nb, resources
 
 
 def replace_py_rel(code, filepath):
@@ -539,6 +556,8 @@ class Jupman:
         self.raise_exc = "jupman-raise"
         self.strip = "jupman-strip"
         self.purge = "jupman-purge"
+        self.preprocess = "jupman-preprocess"        
+
 
         self.raise_exc_code = "raise Exception('TODO IMPLEMENT ME !')"
         """ WARNING: this string can end end up in a .ipynb json, so it must be a valid JSON string  ! Be careful with the double quotes and \n  !!
@@ -546,6 +565,11 @@ class Jupman:
 
         self.tags = [self.raise_exc, self.strip, self.purge]
         """ Jupman tags
+        """
+
+        self.directive_tags= [self.preprocess]
+        """ Jupman generic single tags. Note a cell containing them is not considered a solution.
+            @since 3.3
         """
 
         self.distrib_ext = ['py', 'ipynb']
@@ -558,6 +582,22 @@ class Jupman:
 
             @since 3.2
         """
+
+    def _cancel_tags(self, text):
+        """ Removes Jupman tags from solution WITHOUT stripping content within tags!!
+            
+            WARNING: in other words, this function IS *NOT* SUFFICIENT 
+                    to clean exercises from solutions !!!
+        """
+        ret = text
+        for tag in self.tags:
+            ret = ret \
+                .replace(tag_start(tag), '') \
+                .replace(tag_end(tag), '')                        
+             
+        for tag in self.directive_tags:
+            text = text.replace('#' + tag, '')
+        return ret
 
 
     def is_zip_ignored(self, fname):
@@ -615,6 +655,9 @@ class Jupman:
         ret = re.sub(self.strip_pattern(), '', ret)
         if parse_purge:
             ret = re.sub(self.purge_pattern(), '', ret)
+            for tag in self.directive_tags:
+                ret = ret.replace('#' + tag, '') 
+                    
         ret = re.sub(self.write_solution_here, r'\1\2\n\n', ret)
         if filepath:
             ret = replace_py_rel(ret, filepath)
@@ -711,9 +754,9 @@ class Jupman:
             
             with open(source_abs_fn) as sol_source_f:
                 text = sol_source_f.read()
-                text = re.sub(self.purge_pattern(), '', text)
+                text = re.sub(self.purge_pattern(), '', text)                
                 text = replace_py_rel(text, source_abs_fn)                
-                text = _cancel_tags(text, self.tags)
+                text = self._cancel_tags(text)
                 with open(dest_fn, 'w') as solution_dest_f:
                     info("  Writing (patched) %s " % dest_fn)
                     solution_dest_f.write(text)
@@ -725,8 +768,8 @@ class Jupman:
             replace_ipynb_rel(nb_node, source_abs_fn)
             for cell in nb_node.cells:            
                 if cell.cell_type == "code":    
-                    cell.source = re.sub(self.purge_pattern(), '', cell.source)
-                    cell.source = _cancel_tags(cell.source, self.tags)
+                    cell.source = re.sub(self.purge_pattern(), '', cell.source)                    
+                    cell.source = self._cancel_tags(cell.source)
 
             nbformat.write(nb_node, dest_fn)
             
@@ -808,8 +851,8 @@ class Jupman:
                     if website:
                         if self.is_code_sol(cell.source):
                             nb.cells.append(before_cell(cell_counter, cell.cell_type))
-                            cell.source = re.sub(self.purge_pattern(), '', cell.source)
-                            cell.source = _cancel_tags(cell.source, self.tags)
+                            cell.source = re.sub(self.purge_pattern(), '', cell.source)                            
+                            cell.source = self._cancel_tags(cell.source)
                             nb.cells.append(cell)
                             nb.cells.append(after_cell())
                     nb.cells.append(stripped_cell)
@@ -835,6 +878,31 @@ class Jupman:
 
             cell_counter += 1
         return nb                    
+
+
+    def _is_to_preprocess(self, nb, source_abs_fn):
+        """
+            @since 3.3
+        """
+                                    
+        if source_abs_fn.endswith('.ipynb'):
+            
+            fileKind = FileKinds.detect(source_abs_fn)
+                                                    
+            if fileKind == FileKinds.SOLUTION:
+                return True
+            
+            if fileKind == FileKinds.CHALLENGE_SOLUTION:  # weird case, only really for jupman documentation itself
+                return True
+            
+            if len(nb.cells) > 0:
+                cell = nb.cells[0]
+                if cell.cell_type == 'code' and ('#' + self.preprocess) in cell.source :
+                    return True
+            
+        return False
+    
+        
 
     def generate_exercise(self, source_rel_fn, dest_dir='./'):
         """ Given a relative filename, generates the corresponding exercise file in dest_dir

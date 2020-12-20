@@ -14,6 +14,7 @@ import nbformat
 import time
 import filecmp
 import shutil
+import nbsphinx
 
 from common_test import * 
 import datetime
@@ -110,18 +111,21 @@ def test_is_code_sol_to_strip():
     jupman_raise = '#jupman-raise\nx=5\n#/jupman-raise\n'
     jupman_strip = '#jupman-strip\nx=5\n#/jupman-strip\n'
     jupman_purge = '#jupman-purge\nx=5\n#/jupman-purge\n'
+    jupman_preprocess = '#jupman-preprocess\nbla\n'
 
     assert jm.is_to_strip(solution) == True
     assert jm.is_to_strip(write_here) == True
     assert jm.is_to_strip(jupman_raise) == True
     assert jm.is_to_strip(jupman_strip) == True
     assert jm.is_to_strip(jupman_purge) == True
+    assert jm.is_to_strip(jupman_preprocess) == True
 
     assert jm.is_code_sol(solution) == True
     assert jm.is_code_sol(write_here) == True    
     assert jm.is_code_sol(jupman_raise) == True
     assert jm.is_code_sol(jupman_strip) == True
     assert jm.is_code_sol(jupman_purge) == False
+    assert jm.is_code_sol(jupman_preprocess) == False
     
     cx = """x = 9
 #jupman-purge
@@ -168,6 +172,7 @@ def test_copy_chapter():
 
     assert '# Python\nimport jupman' in nb_node.cells[10].source
     assert '#jupman-raise' in nb_node.cells[10].source
+    assert 'stay!' in nb_node.cells[10].source
 
     assert '<a href="index.html">a link</a>' in nb_node.cells[11].source
     
@@ -382,3 +387,99 @@ def test_validate_markdown_tags():
     assert jm.validate_markdown_tags('**ANSWER**: hello', 'some_file') == 1
     assert jm.validate_markdown_tags('  **ANSWER**: hello', 'some_file') == 1
     assert jm.validate_markdown_tags('bla  **ANSWER**: hello', 'some_file') == 0
+    
+
+    
+def test_preprocessor_sol():
+    jm = make_jm()
+    jmt.init(jm)
+    
+    
+    nb_fn = '_test/test-chapter/nb-sol.ipynb'
+    
+    resources = make_nb_resources(nb_fn)
+
+    d = '_build/test/.doctrees/nbsphinx/'
+    if not os.path.isdir(d):
+        os.makedirs(d)
+
+    exp = nbsphinx.Exporter()
+
+    nb_orig = nbformat.read(nb_fn, nbformat.NO_CONVERT)
+    
+    purged_count = 0
+    stripped_count = 0
+    for cell in nb_orig.cells:        
+        
+        if 'stripped!8' in cell.source:
+            stripped_count += 1
+        if 'purged!9' in cell.source:
+            purged_count += 1
+                
+    assert purged_count == 1    
+    assert stripped_count == 1
+    
+        
+    nb_new, new_res = exp.from_notebook_node(nb_orig, resources)
+        
+    stripped_count = 0
+    for cell in nb_orig.cells: 
+        if 'stripped!8' in cell.source:
+            stripped_count += 1        
+            assert not 'purged!9' in cell.source
+    assert stripped_count == 1
+
+def test_preprocessor_force():
+    jm = make_jm()
+    jmt.init(jm)
+    
+    
+    nb_fn = '_test/test-chapter/force-preprocess.ipynb'
+    
+    resources = make_nb_resources(nb_fn)
+
+    d = '_build/test/.doctrees/nbsphinx/'
+    if not os.path.isdir(d):
+        os.makedirs(d)
+
+    exp = nbsphinx.Exporter()
+
+    nb_orig = nbformat.read(nb_fn, nbformat.NO_CONVERT)
+    
+    assert 'stripped!' in nb_orig.cells[2].source
+    assert 'purged!' in nb_orig.cells[3].source
+    
+    nb_new, new_res = exp.from_notebook_node(nb_orig, resources)
+        
+    stripped_count = 0
+    for cell in nb_orig.cells: 
+        if 'stripped!' in cell.source:
+            stripped_count += 1                    
+        assert '#jupman-stripped' not in cell.source 
+        #assert '#jupman-preprocess' not in cell.source
+        assert 'purged!' not in cell.source        
+    
+    assert stripped_count == 1
+    
+def test_preprocessor_normal():
+    jm = make_jm()
+    jmt.init(jm)
+    
+    nb_fn = '_test/test-chapter/replacements.ipynb'
+    
+    resources = make_nb_resources(nb_fn)
+
+    d = '_build/test/.doctrees/nbsphinx/'
+    if not os.path.isdir(d):
+        os.makedirs(d)
+
+    exp = nbsphinx.Exporter()
+
+    nb_orig = nbformat.read(nb_fn, nbformat.NO_CONVERT)
+    
+    assert 'stay!' in nb_orig.cells[10].source    
+    
+    nb_new, new_res = exp.from_notebook_node(nb_orig, resources)
+    
+    assert 'stay!' in nb_orig.cells[10].source            
+    
