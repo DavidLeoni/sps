@@ -91,4 +91,4 @@ local.properties
 
 ##### KATE
 
-.kate-swp
+*.kate-swp
