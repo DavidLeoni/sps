@@ -13,7 +13,7 @@ import jupman
 print('hi')
 #/jupman-raise
 
-# kept in exercise, removed in solution
+# removed in exercise, kept in solution
 #jupman-strip
 y = "stripped!"
 #/jupman-strip

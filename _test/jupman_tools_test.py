@@ -19,6 +19,7 @@ import nbsphinx
 from common_test import * 
 import datetime
 
+
 def test_detect_release():
     res =  jmt.detect_release()
     assert res == 'dev' or len(res.split('.')) >= 2
@@ -110,21 +111,32 @@ def test_is_code_sol_to_strip():
     write_here = '# write here\nx=5\n'
     jupman_raise = '#jupman-raise\nx=5\n#/jupman-raise\n'
     jupman_strip = '#jupman-strip\nx=5\n#/jupman-strip\n'
-    jupman_purge = '#jupman-purge\nx=5\n#/jupman-purge\n'
+        
     jupman_preprocess = '#jupman-preprocess\nbla\n'
+    
+    jupman_purge = '#jupman-purge\nx=5\n#/jupman-purge\n'
+    jupman_purge_input = 'bla\n#jupman-purge-input\nbla\n'
+    jupman_purge_output = 'bla\n#jupman-purge-output\nbla\n'
+    jupman_purge_io = 'bla\n#jupman-purge-io\nbla\n'
 
     assert jm.is_to_strip(solution) == True
     assert jm.is_to_strip(write_here) == True
     assert jm.is_to_strip(jupman_raise) == True
     assert jm.is_to_strip(jupman_strip) == True
     assert jm.is_to_strip(jupman_purge) == True
-    assert jm.is_to_strip(jupman_preprocess) == True
+    assert jm.is_to_strip(jupman_preprocess) == True    
+    assert jm.is_to_strip(jupman_purge_input) == True
+    assert jm.is_to_strip(jupman_purge_output) == True
+    assert jm.is_to_strip(jupman_purge_io) == True
 
     assert jm.is_code_sol(solution) == True
     assert jm.is_code_sol(write_here) == True    
     assert jm.is_code_sol(jupman_raise) == True
     assert jm.is_code_sol(jupman_strip) == True
     assert jm.is_code_sol(jupman_purge) == False
+    assert jm.is_code_sol(jupman_purge_io) == False
+    assert jm.is_code_sol(jupman_purge_input) == False
+    assert jm.is_code_sol(jupman_purge_output) == False
     assert jm.is_code_sol(jupman_preprocess) == False
     
     cx = """x = 9
@@ -206,7 +218,7 @@ def test_copy_chapter():
         assert '#jupman-purge' not in sol_code
         assert 'stripped!' in sol_code
         assert 'purged!' not in sol_code        
-        assert "# work!\n\nprint('hi')" in sol_code
+        assert "# work!\nprint('hi')" in sol_code
 
     ex_fn = os.path.join(dest_dir, 'some.py')
     assert os.path.isfile(ex_fn)
@@ -238,6 +250,20 @@ def test_copy_chapter():
     assert nb_ex.cells[9].source == 'x = 9\n\n# after'  # jupman-purge everything inside exercises 
     assert '#jupman-strip' not in nb_ex.cells[10].source   
     assert '#jupman-purge' not in nb_ex.cells[10].source   
+    assert nb_ex.cells[11].source == ''
+    assert 'purged!11' in nb_ex.cells[11].outputs[0]['text']
+    
+    
+    assert '#jupman-purge-output' not in nb_ex.cells[12].source
+    assert '-output' not in nb_ex.cells[12].source
+    assert 'purged!12' in nb_ex.cells[12].source
+    assert nb_ex.cells[12].outputs == []
+    
+    assert nb_ex.cells[13].source == ''    
+    assert nb_ex.cells[13].outputs == []
+    assert nb_ex.cells[13].metadata['nbsphinx'] == 'hidden'
+    
+    
 
     # nb_sol --------------------
     nb_sol_fn = os.path.join(dest_dir, 'nb-sol.ipynb')
@@ -250,7 +276,20 @@ def test_copy_chapter():
     assert '#jupman-strip' not in nb_sol.cells[10].source   
     assert '#jupman-purge' not in nb_sol.cells[10].source       
     assert 'stripped!' in nb_sol.cells[10].source
-    assert not 'purged!' in nb_sol.cells[10].source
+    assert 'purged!10' not in nb_sol.cells[10].source
+    
+    assert nb_sol.cells[11].source == ''
+    assert 'purged!11' in nb_sol.cells[11].outputs[0]['text']
+    
+    
+    assert '#jupman-purge-output' not in nb_sol.cells[12].source
+    assert '-output' not in nb_sol.cells[12].source
+    assert 'purged!12' in nb_sol.cells[12].source
+    assert nb_sol.cells[12].outputs == []
+    
+    assert nb_sol.cells[13].source == ''    
+    assert nb_sol.cells[13].outputs == []
+    assert nb_sol.cells[13].metadata['nbsphinx'] == 'hidden'
 
     # nb_sol_web --------------------
     nb_sol_fn = os.path.join(dest_dir, 'nb-sol.ipynb')
@@ -267,8 +306,14 @@ def test_copy_chapter():
             stripped8 += 1
         if 'stripped!10' in cell.source:
             stripped10 += 1    
-        assert not 'purged!9' in cell.source
-        assert not 'purged!10' in cell.source
+        assert 'purged!9' not in cell.source
+        assert 'purged!10' not in cell.source
+        assert 'purged!11' not in cell.source
+        if getattr(cell, 'outputs', None):
+            assert 'purged!12' not in cell.outputs[0]['text']
+        assert 'purged!13' not in cell.source
+        if getattr(cell, 'outputs', None):
+            assert 'purged!13' not in cell.outputs[0]['text']
     assert stripped8 == 1
     assert stripped10 == 1
 
@@ -363,15 +408,43 @@ def test_write_solution_here():
     #assert p.match('# write here')  # corner case, there is no \n    
     #assert p.match('# write here   ')  # corner case, there is no \n    
 
+def test_span_pattern():
+    jm = make_jm()
+            
+    assert re.sub(   jmt.span_pattern('ab'), 'z', '#ab #/ab') == 'z'
+    assert re.sub(   jmt.span_pattern('ab'), 'z', '#ab c #/ab') == 'z'
+    assert re.sub(   jmt.span_pattern('ab'), 'z', '#ab\n#/ab') == 'z'
+    assert re.sub(   jmt.span_pattern('ab'), 'z', '#ab\n#/ab') == 'z'
+    assert re.sub(   jmt.span_pattern('ab'), 'z', '#ab #/ab c') == 'z c'
+    assert re.sub(   jmt.span_pattern('ab'), 'z', '#ab #/ab\nc') == 'z\nc'
+    assert re.sub(   jmt.span_pattern('ab'), 'z', ' #ab #/ab') == ' z'
+    assert re.sub(   jmt.span_pattern('ab'), 'z', '#a b #/ab') == '#a b #/ab'
+    assert re.sub(   jmt.span_pattern('ab'), 'z', '#ab #ab') == '#ab #ab'        
+    assert re.sub(   jmt.span_pattern('ab'), 'z', '#abc #/ab') == '#abc #/ab'
+    assert re.sub(   jmt.span_pattern('ab'), 'z', '#abc#/abc') == '#abc#/abc'
+    assert re.sub(   jmt.span_pattern('ab'), 'z', '#ab c #/ab w #ab d #/ab') == 'z w z'
+    assert re.sub(   jmt.span_pattern('ab'), 'z', '#ab c #/ab\n#ab d #/ab') == 'z\nz'
+    assert re.sub(   jmt.span_pattern('ab'), 'z', '#ab c #/ab #ab d #/ab') == 'z z'
+    
+    
+    
+
 def test_validate_code_tags():
     jm = make_jm()
     assert jm.validate_code_tags('# SOLUTION\nbla', 'some_file') == 1
     assert jm.validate_code_tags('  # SOLUTION\nbla', 'some_file') == 1
     assert jm.validate_code_tags('something before  # SOLUTION\nbla', 'some_file') == 0
     assert jm.validate_code_tags('#jupman-strip\nblabla#/jupman-strip', 'some_file') == 1
-    assert jm.validate_code_tags('#jupman-purge\nblabla#/jupman-purge', 'some_file') == 1
+    assert jm.validate_code_tags('#jupman-strip\nA#/jupman-strip #jupman-raise\nB#/jupman-raise', 'some_file') == 2
+    
+    assert jm.validate_code_tags('#jupman-preprocess', 'some_file') == 0
+    assert jm.validate_code_tags('#jupman-purge\nblabla#/jupman-purge', 'some_file') == 0
+    assert jm.validate_code_tags('#jupman-purge-input\nA', 'some_file') == 0
+    assert jm.validate_code_tags('#jupman-purge-output\nA', 'some_file') == 0
+    assert jm.validate_code_tags('#jupman-purge-io\nA', 'some_file') == 0
+    
     # pairs count as one
-    assert jm.validate_code_tags('#jupman-raise\nsomething#/jupman-raise', 'some_file') == 1
+    assert jm.validate_code_tags('#jupman-raise\nA#/jupman-raise', 'some_file') == 1
     assert jm.validate_code_tags("""
     hello
     #jupman-raise
@@ -455,8 +528,8 @@ def test_preprocessor_force():
     for cell in nb_orig.cells: 
         if 'stripped!' in cell.source:
             stripped_count += 1                    
-        assert '#jupman-stripped' not in cell.source 
-        #assert '#jupman-preprocess' not in cell.source
+        assert '#jupman-strip' not in cell.source 
+        assert '#jupman-preprocess' not in cell.source
         assert 'purged!' not in cell.source        
     
     assert stripped_count == 1
