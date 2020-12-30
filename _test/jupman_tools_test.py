@@ -149,6 +149,84 @@ y = 'purged!'
     assert jm.is_to_strip(cx) == True
     assert jm.is_code_sol(cx) == False
 
+
+def test_purge_tags():
+    jm = make_jm()
+
+
+    # single tag directive
+    
+    assert jm._purge_tags("""
+    bla
+    #jupman-preprocess
+    ble
+    """) == '\n    bla\n    \n    ble\n    '
+    
+    # single tag directive
+    
+    assert jm._purge_tags("""#jupman-preprocess
+    ble
+    """) == '\n    ble\n    '
+    
+    
+    # span tag purge directive, removes between
+    assert jm._purge_tags("""
+    bla
+    #jupman-purge
+    ble
+    #/jupman-purge
+    blo
+    """) == '\n    bla\n    \n    blo\n    '
+    
+    # purge io directive, removes all
+    assert jm._purge_tags("""
+    bla
+    #jupman-purge-io
+    ble        
+    """) == ''
+    
+
+    # purge input directive, removes all
+    assert jm._purge_tags("""
+    bla
+    #jupman-purge-input
+    ble        
+    """) == ''
+
+    # purge output directive, no effect
+    assert jm._purge_tags("""
+    bla
+    #jupman-purge-output
+    ble
+    """) == '\n    bla\n    \n    ble\n    '
+
+    
+    # solution span tag
+    
+    assert jm._purge_tags("""
+    #jupman-raise
+    bla
+    #/jupman-raise""") == '\n    \n    bla\n    '
+    
+    # solution span tag
+    
+    assert jm._purge_tags("""
+    #jupman-strip
+    bla
+    #/jupman-strip""") == '\n    \n    bla\n    '
+    
+    assert jm._purge_tags("""
+    bla
+    #jupman-strip
+    ble
+    #/jupman-strip
+    blo""") == '\n    bla\n    \n    ble\n    \n    blo'
+    
+
+    
+    
+
+
 def test_copy_chapter():
     clean()
     
@@ -218,7 +296,7 @@ def test_copy_chapter():
         assert '#jupman-purge' not in sol_code
         assert 'stripped!' in sol_code
         assert 'purged!' not in sol_code        
-        assert "# work!\nprint('hi')" in sol_code
+        assert "# work!\n\nprint('hi')" in sol_code
 
     ex_fn = os.path.join(dest_dir, 'some.py')
     assert os.path.isfile(ex_fn)
