@@ -1,3 +1,7 @@
+import logging
+# this way we don't get warning of other libs in pytest, see https://stackoverflow.com/a/63946841
+logging.captureWarnings(True)  
+
 import zipfile
 from pylatexenc.latexencode import unicode_to_latex
 from enum import Enum
@@ -10,7 +14,6 @@ import glob
 import stat
 import datetime 
 from nbconvert.preprocessors import Preprocessor  
-import logging
 
 
 class JupmanFormatter(logging.Formatter):
@@ -29,8 +32,6 @@ console_handler.setLevel(logging.DEBUG)
 console_handler.setFormatter(JupmanFormatter())
 logger.addHandler(console_handler)
 
-# this way we don't get warning of other libs in pytest, see https://stackoverflow.com/a/63946841
-logging.captureWarnings(True)  
 
 
 
