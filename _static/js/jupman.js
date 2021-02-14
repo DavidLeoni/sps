@@ -300,15 +300,13 @@ $
         
         var fix = function(prefix){
 
-            s = 'a.reference.internal[href^="' + prefix + 'toc.html"]'
-
-            // DIRTY: THIS IS A POTENTIAL BUG: IF 'index' is not the last one it won't be selected !
-           //  Made so because index may be translated in other languages   
-
-            var link = $(s).not(":last")
+            var s = 'a.reference.internal[href^="' + prefix + 'toc.html"]';            
+            
             var span = $(s + ' > span');
             span.off('click')
 
+            var link = $(s); 
+            
             link.on('click', function (ev) {
                 ev.preventDefault();
                 toggleCurrent($(this));
@@ -317,6 +315,7 @@ $
             });
         }
 
+        
         fix('')
         fix('../')
         fix('../../')    // probably useless but just in case ...
