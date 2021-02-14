@@ -315,6 +315,14 @@ $
             });
         }
 
+        // fix for https://github.com/DavidLeoni/jupman/issues/71
+        // should better do it serverside, but at least it works!
+        console.log("Fixing home link ...");
+        var home = $('a.icon-home');
+        
+        if (home){
+            home.attr('href', home.attr('href').replace('toc-page.html', 'index.html'))
+        }
         
         fix('')
         fix('../')
