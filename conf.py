@@ -24,10 +24,10 @@ import re
 jm = jmt.Jupman()
 
 # TODO CHANGE
-jm.subtitle = "A template manager for online books made with Jupyter notebooks and NBSphinx doc generator""" 
-jm.course = "Applied Pythonics" # TODO CHANGE
-jm.degree = "Nuclear Templates Engineering" # TODO CHANGE
-author = 'People That Write a Lot' # TODO CHANGE
+jm.subtitle = "Raccolta esami passati" 
+jm.course = "Seminari Python" 
+jm.degree = "Triennale Sociologia @Università di Trento" 
+author = 'David Leoni'
 # TODO FIRST YEAR
 copyright = '# 2020 - %s, %s' % (datetime.datetime.now().year, author)
 
@@ -203,7 +203,7 @@ language = None
 html_title = project # + ' version ' + release
 # canonical url for documentation
 # since sphinx 1.8
-html_baseurl = 'https://jupman.softpython.org/en/latest/'
+html_baseurl = 'https://sps.davidleoni.it'
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
@@ -241,7 +241,7 @@ html_js_files = [
 html_css_files = [
     'css/jupman.css',      # shared among jupyter and website
     'css/jupman-web.css',  # only on website
-    #'css/softpython-theme.css',  #uncomment to activate    
+    'css/softpython-theme.css',  #uncomment to activate    
 ]
 
 # -- Options for HTMLHelp output ------------------------------------------
@@ -448,10 +448,6 @@ def setup(app):
             return 'NAME-SURNAME-ID/%s' % x[len('project/'):]
         else:
             return x
-
-    jm.zip_paths(['project', 'requirements.txt'], 
-                  '_static/generated/project-template',
-                  remap=remap)    
 
 source_suffix = {
     '.rst': 'restructuredtext',
