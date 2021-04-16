@@ -36,11 +36,11 @@ copyright = '# 2020 - %s, %s' % (datetime.datetime.now().year, author)
 #####     AND IT SHOULD ALSO BE THE SAME NAME ON READTHEDOCS 
 #####     (like i.e. jupman.readthedocs.org)
 
-jm.filename = 'jupman'   # The filename without the extension
+jm.filename = 'sps'   # The filename without the extension
 
 # common files for exercise and exams as paths. Paths are intended relative to the project root. Globs like /**/* are allowed.
 
-jm.chapter_files = ['jupman.py', 'my_lib.py', '_static/img/cc-by.png', 
+jm.chapter_files = ['jupman.py',  '_static/img/cc-by.png', 
                     
                     '_static/js/jupman.js',  # these files are injected when you call jupman.init()
                     '_static/css/jupman.css',                     
@@ -53,28 +53,28 @@ jm.chapter_exclude_patterns =  ['[^_]*/','exams/', 'project/']
 
 # words used in ipynb files - you might want to translate these in your language. 
 # Use singular
-jm.ipynb_show_solution = "Show solution"
-jm.ipynb_hide_solution = "Hide"
-jm.ipynb_show_answer = "Show answer"
-jm.ipynb_hide_answer = "Hide"
+jm.ipynb_show_solution = "Mostra soluzione"
+jm.ipynb_hide_solution = "Nascondi"
+jm.ipynb_show_answer = "Mostra risposta"
+jm.ipynb_hide_answer = "Nascondi"
 # Use plural
-jm.ipynb_solutions = "SOLUTIONS"
-jm.ipynb_exercises = "EXERCISES"
+jm.ipynb_solutions = "SOLUZIONI"
+jm.ipynb_exercises = "ESERCIZI"
 
 #NOTE: this string is not just a translation, it's also a command that when building the exercises
 #      removes the content after it in the Python cell it is contained in
 #      If the user inserts extra spaces the phrase will be recognized anyway
-jm.write_solution_here = jmt.tag_regex("# write here", must_begin=False, preserve_line=True)
+jm.write_solution_here = jmt.tag_regex("# scrivi qui", must_begin=False, preserve_line=True)
 
 #NOTE: this string is not just a translation, it's also a command that when building the exercises  
 # completely removes the content of the python cell it is contained in (solution comment included). 
 # If the user inserts extra spaces the phrase will be recognized anyway
-jm.solution = jmt.tag_regex("# SOLUTION")
+jm.solution = jmt.tag_regex("# SOLUZIONE")
 
 #NOTE: this string is not just a translation, it's also a command that 
 #   when building the exercises removes the content after it in the markdown cell
 #   it is contained in
-jm.markdown_answer = jmt.tag_regex('**ANSWER**:')
+jm.markdown_answer = jmt.tag_regex('**RISPOSTA**:')
 #################################################################
 
 jm.zip_ignored = ['__pycache__', '**.ipynb_checkpoints', '.pyc', '.cache', '.pytest_cache', '.vscode']
