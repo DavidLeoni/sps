@@ -52,7 +52,7 @@ def init(toc=False):
             #    so it is better to include scripts instead of using relative imports
 
             root = os.path.dirname(os.path.abspath(__file__))
-            _static = os.path.join(root, '_static')                
+            _static = os.path.join(root, '_static')                                        
             
             css = open("%s/css/jupman.css" % _static, "r").read()
             tocjs = open("%s/js/toc.js" % _static, "r").read()
@@ -163,6 +163,12 @@ def mem_limit(MB=None):
     if os.name == 'nt':
         print('WARNING: limiting memory on Windows is not supported')
         return
+
+    #https://stackoverflow.com/a/64444776
+    import platform
+    if platform.system().lower() == 'darwin':
+        print('WARNING: limiting memory on Mac is not supported')
+        return        
     
     import resource
     with open('/proc/meminfo', 'r') as mem:
@@ -221,9 +227,9 @@ def draw_text(text, fontsize=None):
         plt.text(0, 0, str(text),fontsize=9) # note: this default looks good in PDF, but is small for jupyter
     ax.axis('off')        
     plt.show()    
-
+    
 def draw_df(df, fontsize=16, scale=(1.8, 3.9), figsize=(12, 2)):
-    """ EXPERIMENTAL draws a Pandas DataFrame as an image
+    """ Draws a Pandas DataFrame as an image
         Taken from https://stackoverflow.com/a/36904120
         @since 3.3
     """    
@@ -241,7 +247,16 @@ def draw_df(df, fontsize=16, scale=(1.8, 3.9), figsize=(12, 2)):
     tabla.set_fontsize(fontsize) # if ++fontsize is necessary ++colWidths
     tabla.scale(scale[0], scale[1]) # change size table
     #plt.savefig('table.png', transparent=True)    
-
+        
+def get_doc(fun):
+    """ Returns the help of a function formatted in a faithful manner
+        
+        @since 3.3
+    """
+    import pydoc
+    lines = pydoc.render_doc(fun, renderer=pydoc.plaintext).split('\n')
+    
+    return 'def ' + lines[2] + ':\n    """ ' + '\n    '.join(lines[3:]).strip()+ '\n    """'        
     
 def pytut_json(jm_code):
     """ Runs jm_code and return a JSON execution trace
