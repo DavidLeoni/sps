@@ -1,23 +1,35 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="it" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="it" > <!--<![endif]-->
+<html class="writer-html5" lang="it" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>here go packages only needed during documentation build &mdash; SPS</title>
   
 
   
-  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/jupman.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/jupman-web.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/softpython-theme.css" type="text/css" />
+
   
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+
+  
+    <link rel="canonical" href="https://sps.davidleoni.it/requirements-build.html" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -35,13 +47,6 @@
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/jupman.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/jupman-web.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/softpython-theme.css" type="text/css" />
     <link rel="index" title="Indice" href="genindex.html" />
     <link rel="search" title="Cerca" href="search.html" /> 
 </head>
@@ -80,6 +85,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -120,7 +126,7 @@
 <li class="toctree-l4"><a class="reference internal" href="exams/2021-05-31/solutions/exam-2021-05-31-sol.html#Scarica-esercizi-e-soluzioni">Scarica esercizi e soluzioni</a></li>
 <li class="toctree-l4"><a class="reference internal" href="exams/2021-05-31/solutions/exam-2021-05-31-sol.html#Modulo-A">Modulo A</a></li>
 <li class="toctree-l4"><a class="reference internal" href="exams/2021-05-31/solutions/exam-2021-05-31-sol.html#A1-babbà">A1 babbà</a></li>
-<li class="toctree-l4"><a class="reference internal" href="exams/2021-05-31/solutions/exam-2021-05-31-sol.html#A2-selnum">A2 selnum</a></li>
+<li class="toctree-l4"><a class="reference internal" href="exams/2021-05-31/solutions/exam-2021-05-31-sol.html#A2-Il-Tempio-della-Fortuna">A2 Il Tempio della Fortuna</a></li>
 <li class="toctree-l4"><a class="reference internal" href="exams/2021-05-31/solutions/exam-2021-05-31-sol.html#A3-rospo">A3 rospo</a></li>
 <li class="toctree-l4"><a class="reference internal" href="exams/2021-05-31/solutions/exam-2021-05-31-sol.html#A4-miniera">A4 miniera</a></li>
 <li class="toctree-l4"><a class="reference internal" href="exams/2021-05-31/solutions/exam-2021-05-31-sol.html#Modulo-B">Modulo B</a></li>
@@ -135,8 +141,8 @@
 <li class="toctree-l4"><a class="reference internal" href="exams/2021-04-16/solutions/exam-2021-04-16-sol.html#Esercizio---prendilettere">Esercizio - prendilettere</a></li>
 <li class="toctree-l4"><a class="reference internal" href="exams/2021-04-16/solutions/exam-2021-04-16-sol.html#Esercizio---brico">Esercizio - brico</a></li>
 <li class="toctree-l4"><a class="reference internal" href="exams/2021-04-16/solutions/exam-2021-04-16-sol.html#Esercizio---La-parola-più-lunga">Esercizio - La parola più lunga</a></li>
-<li class="toctree-l4"><a class="reference internal" href="exams/2021-04-16/solutions/exam-2021-04-16-sol.html#Esercizio---Scalinate">Esercizio - Scalinate</a></li>
-<li class="toctree-l4"><a class="reference internal" href="exams/2021-04-16/solutions/exam-2021-04-16-sol.html#Esercizio---Prima-di-seconda">Esercizio - Prima di seconda</a></li>
+<li class="toctree-l4"><a class="reference internal" href="exams/2021-04-16/solutions/exam-2021-04-16-sol.html#Esercizio---splash">Esercizio - splash</a></li>
+<li class="toctree-l4"><a class="reference internal" href="exams/2021-04-16/solutions/exam-2021-04-16-sol.html#Esercizio---accatastare">Esercizio - accatastare</a></li>
 </ul>
 </li>
 </ul>
@@ -152,6 +158,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -238,12 +245,13 @@ ipykernel==4.6.1
 nbsphinx==0.7.1
 arghandler==1.2.0
 recommonmark==0.6.0
-sphinx_rtd_theme==0.4.3
+sphinx_rtd_theme==0.5.2
 pylatexenc==2.1
 pathspec==0.7.0
 readthedocs-sphinx-ext==1.0.4
 pygments==2.7.1
-jinja2==2.11.3</p>
+jinja2==2.11.3
+markupsafe==2.0.1</p>
 </div>
 
 
@@ -251,20 +259,25 @@ jinja2==2.11.3</p>
            
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright # 2020 - 2021, David Leoni
+        &#169; Copyright # 2020 - 2022, David Leoni.
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 
@@ -272,7 +285,6 @@ jinja2==2.11.3</p>
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

@@ -1,23 +1,35 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="it" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="it" > <!--<![endif]-->
+<html class="writer-html5" lang="it" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Esame Ven 16, Apr 2021 A &mdash; SPS</title>
   
 
   
-  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/jupman.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/jupman-web.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/softpython-theme.css" type="text/css" />
+
   
   
 
   
-  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+
+  
+    <link rel="canonical" href="https://sps.davidleoni.it/exams/2021-04-16/solutions/exam-2021-04-16-sol.html" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
@@ -35,13 +47,6 @@
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/css/jupman.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/css/jupman-web.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/css/softpython-theme.css" type="text/css" />
     <link rel="index" title="Indice" href="../../../genindex.html" />
     <link rel="search" title="Cerca" href="../../../search.html" />
     <link rel="next" title="Esame Lun 31, Mag 2021 - A e B" href="../../2021-05-31/solutions/exam-2021-05-31-sol.html" />
@@ -82,6 +87,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -122,7 +128,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../2021-05-31/solutions/exam-2021-05-31-sol.html#Scarica-esercizi-e-soluzioni">Scarica esercizi e soluzioni</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../2021-05-31/solutions/exam-2021-05-31-sol.html#Modulo-A">Modulo A</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../2021-05-31/solutions/exam-2021-05-31-sol.html#A1-babbà">A1 babbà</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../2021-05-31/solutions/exam-2021-05-31-sol.html#A2-selnum">A2 selnum</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../2021-05-31/solutions/exam-2021-05-31-sol.html#A2-Il-Tempio-della-Fortuna">A2 Il Tempio della Fortuna</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../2021-05-31/solutions/exam-2021-05-31-sol.html#A3-rospo">A3 rospo</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../2021-05-31/solutions/exam-2021-05-31-sol.html#A4-miniera">A4 miniera</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../2021-05-31/solutions/exam-2021-05-31-sol.html#Modulo-B">Modulo B</a></li>
@@ -137,8 +143,8 @@
 <li class="toctree-l4"><a class="reference internal" href="#Esercizio---prendilettere">Esercizio - prendilettere</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Esercizio---brico">Esercizio - brico</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Esercizio---La-parola-più-lunga">Esercizio - La parola più lunga</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#Esercizio---Scalinate">Esercizio - Scalinate</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#Esercizio---Prima-di-seconda">Esercizio - Prima di seconda</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Esercizio---splash">Esercizio - splash</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Esercizio---accatastare">Esercizio - accatastare</a></li>
 </ul>
 </li>
 </ul>
@@ -154,6 +160,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -671,8 +678,8 @@ lett
 </div>
 </div>
 </div>
-<div class="section" id="Esercizio---Scalinate">
-<h2>Esercizio - Scalinate<a class="headerlink" href="#Esercizio---Scalinate" title="Link a questa intestazione">¶</a></h2>
+<div class="section" id="Esercizio---splash">
+<h2>Esercizio - splash<a class="headerlink" href="#Esercizio---splash" title="Link a questa intestazione">¶</a></h2>
 <p>✪✪✪ Data una lista di lunghezza dispari riempita di zeri eccetto il numero in mezzo, scrivi del codice che MODIFICA la lista per scrivere numeri che decrescano mano a mano che ci si allontana dal centro.</p>
 <ul class="simple">
 <li><p>la lunghezza della lista è sempre dispari</p></li>
@@ -751,8 +758,8 @@ lett
 </div>
 </div>
 </div>
-<div class="section" id="Esercizio---Prima-di-seconda">
-<h2>Esercizio - Prima di seconda<a class="headerlink" href="#Esercizio---Prima-di-seconda" title="Link a questa intestazione">¶</a></h2>
+<div class="section" id="Esercizio---accatastare">
+<h2>Esercizio - accatastare<a class="headerlink" href="#Esercizio---accatastare" title="Link a questa intestazione">¶</a></h2>
 <p>✪✪✪ Data una <code class="docutils literal notranslate"><span class="pre">stringa</span></code> e due caratteri <code class="docutils literal notranslate"><span class="pre">car1</span></code> e <code class="docutils literal notranslate"><span class="pre">car2</span></code>, scrivi del codice che STAMPA <code class="docutils literal notranslate"><span class="pre">True</span></code> se tutte le occorrenze di <code class="docutils literal notranslate"><span class="pre">car1</span></code> in stringa sono <strong>sempre</strong> seguite da <code class="docutils literal notranslate"><span class="pre">car2</span></code>.</p>
 <p>Esempio - data:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">stringa</span><span class="p">,</span><span class="n">car1</span><span class="p">,</span><span class="n">car2</span> <span class="o">=</span> <span class="s2">&quot;accatastare la posta nella stiva&quot;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span><span class="s1">&#39;t&#39;</span>
@@ -848,29 +855,29 @@ True
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../../2021-05-31/solutions/exam-2021-05-31-sol.html" class="btn btn-neutral float-right" title="Esame Lun 31, Mag 2021 - A e B" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="../../../index.html" class="btn btn-neutral float-left" title="Seminari Python @Sociologia" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="../../2021-05-31/solutions/exam-2021-05-31-sol.html" class="btn btn-neutral float-right" title="Esame Lun 31, Mag 2021 - A e B" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../../../index.html" class="btn btn-neutral float-left" title="Seminari Python @Sociologia" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright # 2020 - 2021, David Leoni
+        &#169; Copyright # 2020 - 2022, David Leoni.
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 
@@ -878,7 +885,6 @@ True
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

@@ -1,23 +1,35 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="it" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="it" > <!--<![endif]-->
+<html class="writer-html5" lang="it" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Esame Lun 31, Mag 2021 - A e B &mdash; SPS</title>
   
 
   
-  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/jupman.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/jupman-web.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/softpython-theme.css" type="text/css" />
+
   
   
 
   
-  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+
+  
+    <link rel="canonical" href="https://sps.davidleoni.it/exams/2021-05-31/solutions/exam-2021-05-31-sol.html" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
@@ -35,13 +47,6 @@
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/css/jupman.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/css/jupman-web.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/css/softpython-theme.css" type="text/css" />
     <link rel="index" title="Indice" href="../../../genindex.html" />
     <link rel="search" title="Cerca" href="../../../search.html" />
     <link rel="next" title="Esame Lun 14, Giu 2021 A" href="../../2021-06-14/solutions/exam-2021-06-14-sol.html" />
@@ -82,6 +87,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -122,7 +128,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#Scarica-esercizi-e-soluzioni">Scarica esercizi e soluzioni</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Modulo-A">Modulo A</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#A1-babbà">A1 babbà</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#A2-selnum">A2 selnum</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#A2-Il-Tempio-della-Fortuna">A2 Il Tempio della Fortuna</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#A3-rospo">A3 rospo</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#A4-miniera">A4 miniera</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Modulo-B">Modulo B</a></li>
@@ -137,8 +143,8 @@
 <li class="toctree-l4"><a class="reference internal" href="../../2021-04-16/solutions/exam-2021-04-16-sol.html#Esercizio---prendilettere">Esercizio - prendilettere</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../2021-04-16/solutions/exam-2021-04-16-sol.html#Esercizio---brico">Esercizio - brico</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../2021-04-16/solutions/exam-2021-04-16-sol.html#Esercizio---La-parola-più-lunga">Esercizio - La parola più lunga</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../2021-04-16/solutions/exam-2021-04-16-sol.html#Esercizio---Scalinate">Esercizio - Scalinate</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../2021-04-16/solutions/exam-2021-04-16-sol.html#Esercizio---Prima-di-seconda">Esercizio - Prima di seconda</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../2021-04-16/solutions/exam-2021-04-16-sol.html#Esercizio---splash">Esercizio - splash</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../2021-04-16/solutions/exam-2021-04-16-sol.html#Esercizio---accatastare">Esercizio - accatastare</a></li>
 </ul>
 </li>
 </ul>
@@ -154,6 +160,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -479,9 +486,6 @@ div.rendered_html tbody tr:hover {
 <div class="section" id="A1-babbà">
 <h2>A1 babbà<a class="headerlink" href="#A1-babbà" title="Link a questa intestazione">¶</a></h2>
 <p>✪✪ Scrivi del codice che data una lettera <code class="docutils literal notranslate"><span class="pre">cerca</span></code> da trovare e una <code class="docutils literal notranslate"><span class="pre">frase</span></code>, produce una lista con tutte le parole contenti quella lettera</p>
-<ul class="simple">
-<li><p><strong>USA</strong> una list comprehension</p></li>
-</ul>
 <a  class="jupman-sol jupman-sol-toggler"
  onclick="jupman.toggleSolution(this);"
  data-jupman-show="Mostra soluzione" data-jupman-hide="Nascondi">Mostra soluzione</a><div class="jupman-sol jupman-sol-code" style="display:none"><div class="nbinput docutils container">
@@ -490,20 +494,23 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 
-<span></span><span class="n">cerca</span> <span class="o">=</span> <span class="s1">&#39;à&#39;</span>  <span class="c1"># [&#39;città&#39;, &#39;babbà&#39;]</span>
+<span></span><span class="n">cerca</span> <span class="o">=</span> <span class="s1">&#39;à&#39;</span>   <span class="c1"># [&#39;città&#39;, &#39;babbà&#39;]</span>
 <span class="c1">#cerca = &#39;è&#39;  # [&#39;è&#39;, &#39;bignè&#39;, &#39;caffè&#39;]</span>
 
 <span class="n">frase</span> <span class="o">=</span> <span class="s2">&quot;Questa città è piena di babbà , bignè e caffè&quot;</span>
 
 <span class="c1"># scrivi qui</span>
 
-<span class="p">[</span><span class="n">parola</span> <span class="k">for</span> <span class="n">parola</span> <span class="ow">in</span> <span class="n">frase</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">if</span> <span class="n">cerca</span> <span class="ow">in</span> <span class="n">parola</span><span class="p">]</span>
+<span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">parola</span> <span class="ow">in</span> <span class="n">frase</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">cerca</span> <span class="ow">in</span> <span class="n">parola</span><span class="p">:</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parola</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
@@ -516,7 +523,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 
-<span></span><span class="n">cerca</span> <span class="o">=</span> <span class="s1">&#39;à&#39;</span>  <span class="c1"># [&#39;città&#39;, &#39;babbà&#39;]</span>
+<span></span><span class="n">cerca</span> <span class="o">=</span> <span class="s1">&#39;à&#39;</span>   <span class="c1"># [&#39;città&#39;, &#39;babbà&#39;]</span>
 <span class="c1">#cerca = &#39;è&#39;  # [&#39;è&#39;, &#39;bignè&#39;, &#39;caffè&#39;]</span>
 
 <span class="n">frase</span> <span class="o">=</span> <span class="s2">&quot;Questa città è piena di babbà , bignè e caffè&quot;</span>
@@ -528,9 +535,11 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 </div>
-<div class="section" id="A2-selnum">
-<h2>A2 selnum<a class="headerlink" href="#A2-selnum" title="Link a questa intestazione">¶</a></h2>
-<p>✪✪ Date una lista <code class="docutils literal notranslate"><span class="pre">la</span></code> di numeri e una <code class="docutils literal notranslate"><span class="pre">lb</span></code> di booleani, scrivi del codice che MODIFICA la lista <code class="docutils literal notranslate"><span class="pre">lc</span></code> mettendoci dentro solo i numeri di <code class="docutils literal notranslate"><span class="pre">la</span></code> per cui c’è un <code class="docutils literal notranslate"><span class="pre">True</span></code> alla corrispondente posizione di <code class="docutils literal notranslate"><span class="pre">lb</span></code></p>
+<div class="section" id="A2-Il-Tempio-della-Fortuna">
+<h2>A2 Il Tempio della Fortuna<a class="headerlink" href="#A2-Il-Tempio-della-Fortuna" title="Link a questa intestazione">¶</a></h2>
+<p>✪✪ Esplorando il Tempio della Fortuna, hai trovato delle pietre preziose ciascuna con un numero sacro scavato sopra di essa. Sei tentato di prenderle tutte, ma un messaggio sopra le pietre avverte minaccioso che solo gli stolti prendono i numeri senza prima aver consultato l’Oracolo.</p>
+<p>A fianco trovi la statua di un Buddha a gambe incrociate che tiene un vassoio con delle cavità in sequenza - qualche cavità ha un fagiolo, altri sono vuote.</p>
+<p>Date una lista <code class="docutils literal notranslate"><span class="pre">pietre</span></code> di numeri e una <code class="docutils literal notranslate"><span class="pre">oracolo</span></code> di booleani, scrivi del codice che MODIFICA la lista <code class="docutils literal notranslate"><span class="pre">sacca</span></code> mettendoci dentro solo i numeri di <code class="docutils literal notranslate"><span class="pre">pietre</span></code> per cui c’è un <code class="docutils literal notranslate"><span class="pre">True</span></code> alla corrispondente posizione di <code class="docutils literal notranslate"><span class="pre">oracolo</span></code></p>
 <ul class="simple">
 <li><p>assumi che entrambe le liste abbiano esattamente le stesse dimensioni</p></li>
 </ul>
@@ -540,13 +549,13 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">la</span> <span class="o">=</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span>    <span class="mi">7</span><span class="p">,</span>     <span class="mi">6</span><span class="p">,</span>    <span class="mi">8</span><span class="p">,</span>    <span class="mi">7</span><span class="p">]</span>
-<span class="n">lb</span> <span class="o">=</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span>
+<span></span><span class="n">pietre</span>  <span class="o">=</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span>    <span class="mi">7</span><span class="p">,</span>     <span class="mi">6</span><span class="p">,</span>    <span class="mi">8</span><span class="p">,</span>    <span class="mi">7</span><span class="p">]</span>
+<span class="n">oracolo</span> <span class="o">=</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
-<p>Dopo il tuo codice deve risultare</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">lc</span><span class="p">)</span>
+<p>Dopo il tuo codice deve risultare:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">sacca</span><span class="p">)</span>
 <span class="go">[9, 6, 8]</span>
 </pre></div>
 </div>
@@ -558,23 +567,22 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 
-<span></span><span class="n">la</span><span class="p">,</span> <span class="n">lb</span> <span class="o">=</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">7</span><span class="p">],</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span>   <span class="c1"># [9, 6, 8]</span>
-<span class="c1">#la, lb = [3,5,2,3,4,2,4], [True, True, False, True, False, True, False]  # [3,5,3,2]</span>
-<span class="n">lc</span> <span class="o">=</span> <span class="p">[]</span>
+<span></span><span class="n">pietre</span><span class="p">,</span><span class="n">oracolo</span> <span class="o">=</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">7</span><span class="p">],</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span>   <span class="c1"># [9, 6, 8]</span>
+<span class="c1">#pietre,oracolo = [3,5,2,3,4,2,4], [True, True, False, True, False, True, False]  # [3,5,3,2]</span>
+<span class="n">sacca</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="c1"># scrivi qui</span>
 
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">la</span><span class="p">)):</span>
-    <span class="k">if</span> <span class="n">lb</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
-        <span class="n">lc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">la</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pietre</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="n">oracolo</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+        <span class="n">sacca</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pietre</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 
-<span class="n">lc</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sacca</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
@@ -587,9 +595,9 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 
-<span></span><span class="n">la</span><span class="p">,</span> <span class="n">lb</span> <span class="o">=</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">7</span><span class="p">],</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span>   <span class="c1"># [9, 6, 8]</span>
-<span class="c1">#la, lb = [3,5,2,3,4,2,4], [True, True, False, True, False, True, False]  # [3,5,3,2]</span>
-<span class="n">lc</span> <span class="o">=</span> <span class="p">[]</span>
+<span></span><span class="n">pietre</span><span class="p">,</span><span class="n">oracolo</span> <span class="o">=</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">7</span><span class="p">],</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span>   <span class="c1"># [9, 6, 8]</span>
+<span class="c1">#pietre,oracolo = [3,5,2,3,4,2,4], [True, True, False, True, False, True, False]  # [3,5,3,2]</span>
+<span class="n">sacca</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="c1"># scrivi qui</span>
 
@@ -722,7 +730,7 @@ roooosssppooo
 </div>
 <div class="section" id="B1-Strutture-sanitarie">
 <h2>B1 Strutture sanitarie<a class="headerlink" href="#B1-Strutture-sanitarie" title="Link a questa intestazione">¶</a></h2>
-<p>✪✪ Scrivere una funzione che apre il dataset <a class="reference external" href="SANSTRU001.CSV">SANSTRU001.CSV</a> <strong>con pandas</strong> (encoding UTF-8) e prende in input un codice comune e una stringa di testo, e RITORNA un dataframe con selezionate solo le righe aventi quel codice comune e che contengono la stringa nella colonna <code class="docutils literal notranslate"><span class="pre">ASSISTENZA</span></code>. Il dataset ritornato deve avere solo le colonne <code class="docutils literal notranslate"><span class="pre">STRUTTURA</span></code>, <code class="docutils literal notranslate"><span class="pre">ASSISTENZA</span></code>, <code class="docutils literal notranslate"><span class="pre">COD_COMUNE</span></code>, <code class="docutils literal notranslate"><span class="pre">COMUNE</span></code>. La funzione STAMPA anche il numero di righe trovate.</p>
+<p>✪✪ Scrivere una funzione che apre il dataset <a class="reference external" href="SANSTRUT001.csv">SANSTRUT001.csv</a> <strong>con pandas</strong> (encoding UTF-8) e prende in input un codice comune e una stringa di testo, e RITORNA un dataframe con selezionate solo le righe aventi quel codice comune e che contengono la stringa nella colonna <code class="docutils literal notranslate"><span class="pre">ASSISTENZA</span></code>. Il dataset ritornato deve avere solo le colonne <code class="docutils literal notranslate"><span class="pre">STRUTTURA</span></code>, <code class="docutils literal notranslate"><span class="pre">ASSISTENZA</span></code>, <code class="docutils literal notranslate"><span class="pre">COD_COMUNE</span></code>, <code class="docutils literal notranslate"><span class="pre">COMUNE</span></code>. La funzione STAMPA anche il numero di righe trovate.</p>
 <p>Fonte dati: <a class="reference external" href="https://dati.trentino.it/dataset/strutture-sanitarie-dell-azienda-sanitaria-e-convenzionate">dati.trentino.it</a></p>
 <a  class="jupman-sol jupman-sol-toggler"
  onclick="jupman.toggleSolution(this);"
@@ -731,9 +739,8 @@ roooosssppooo
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>   <span class="c1"># importiamo pandas e per comodità lo rinominiamo in  &#39;pd&#39;</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>    <span class="c1"># importiamo numpy e per comodità lo rinominiamo in &#39;np&#39;</span>
-
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="k">def</span> <span class="nf">strutsan</span><span class="p">(</span><span class="n">cod_comune</span><span class="p">,</span> <span class="n">assistenza</span><span class="p">):</span>
 
@@ -751,9 +758,8 @@ roooosssppooo
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>   <span class="c1"># importiamo pandas e per comodità lo rinominiamo in  &#39;pd&#39;</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>    <span class="c1"># importiamo numpy e per comodità lo rinominiamo in &#39;np&#39;</span>
-
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="k">def</span> <span class="nf">strutsan</span><span class="p">(</span><span class="n">cod_comune</span><span class="p">,</span> <span class="n">assistenza</span><span class="p">):</span>
     <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;TODO IMPLEMENT ME !&#39;</span><span class="p">)</span>
@@ -1569,29 +1575,29 @@ Trovati 22 risultati
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../../2021-06-14/solutions/exam-2021-06-14-sol.html" class="btn btn-neutral float-right" title="Esame Lun 14, Giu 2021 A" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="../../2021-04-16/solutions/exam-2021-04-16-sol.html" class="btn btn-neutral float-left" title="Esame Ven 16, Apr 2021 A" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="../../2021-06-14/solutions/exam-2021-06-14-sol.html" class="btn btn-neutral float-right" title="Esame Lun 14, Giu 2021 A" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../../2021-04-16/solutions/exam-2021-04-16-sol.html" class="btn btn-neutral float-left" title="Esame Ven 16, Apr 2021 A" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright # 2020 - 2021, David Leoni
+        &#169; Copyright # 2020 - 2022, David Leoni.
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 
@@ -1599,7 +1605,6 @@ Trovati 22 risultati
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

@@ -6,8 +6,6 @@
 
 .. toctree::   
    
-   toc.rst
-
-   references.ipynb
+   toc.rst   
       
    Index <toc.html#http://>
